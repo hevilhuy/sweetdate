@@ -4,25 +4,30 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://java.sun.com/jsf/passthrough">
+      xmlns:p="http://java.sun.com/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <b:modal id="register" title="Term of use" styleClass="modalPseudoClass">
-            <h3>Please read carefully before process to next step!</h3>
-            <p>The rule of Sweet Date</p>
-            <f:facet name="footer">
-                <b:form>
-                    <b:button value="Close" dismiss="modal"></b:button>
-                    <b:commandButton action="register?faces-redirect=true" value="Go" look="primary" p:data-dismiss="modal"></b:commandButton>
-                </b:form>
-            </f:facet>
-        </b:modal>
-        <b:row>
-            <b:column span="12">
-                <b:button value="Register" look="warning" onclick="$('.modalPseudoClass').modal()"/>
-            </b:column>
-        </b:row>
+        <ui:composition template="template/master_layout.xhtml">
+            <ui:define name="content">
+                <b:modal id="register" title="Term of use" styleClass="modalPseudoClass">
+                    <h3>Please read carefully before process to next step!</h3>
+                    <p>The rule of Sweet Date</p>
+                    <f:facet name="footer">
+                        <b:form>
+                            <b:button value="Close" dismiss="modal"></b:button>
+                            <b:commandButton action="#{indexManagedBean.goToRegister()}" value="Go" look="primary" p:data-dismiss="modal"></b:commandButton>
+                        </b:form>
+                    </f:facet>
+                </b:modal>
+                <b:row>
+                    <b:column span="12">
+                        <b:button value="Register" look="warning" onclick="$('.modalPseudoClass').modal()"/>
+                    </b:column>
+                </b:row>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>

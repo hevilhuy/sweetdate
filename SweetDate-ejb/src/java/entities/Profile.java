@@ -57,7 +57,7 @@ public class Profile implements Serializable
     private String username;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 50)
     @Column(name = "Password")
     private String password;
     @Size(max = 1073741823)

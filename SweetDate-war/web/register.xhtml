@@ -18,6 +18,14 @@
                 </b:row>
                 <b:row>
                     <b:column medium-screen="6">
+                        <p:outputLabel>Display name: </p:outputLabel>
+                    </b:column>
+                    <b:column medium-screen="6">
+                        <b:inputText value="#{registerManagedBean.profile.displayName}"></b:inputText>
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column medium-screen="6">
                         <p:outputLabel>Username: </p:outputLabel>
                     </b:column>
 
@@ -47,7 +55,7 @@
                 </b:row>
                 <b:row>
                     <b:column offset="5" span="1">
-                        <b:commandButton action="index" value="Submit" look="success"></b:commandButton>
+                        <b:commandButton action="#{registerManagedBean.register()}" value="Submit" look="success"></b:commandButton>
                     </b:column>
                     <b:column span="1">
                         <b:commandButton value="Reset" type="reset" look="danger"></b:commandButton>

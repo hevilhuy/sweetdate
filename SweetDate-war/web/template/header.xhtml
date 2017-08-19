@@ -23,11 +23,12 @@
         </b:row>
         <b:navBar brand="Sweet Date" style="background: #0076a3 url(../img/blue_pattern.gif)">
             <b:navbarLinks pull="right" style="margin-right: 10px">
-                <b:navLink value="Home" href="#"></b:navLink>
+                <b:navLink value="Home" outcome="faces/index.xhtml"></b:navLink>
                 <b:navLink value="Search" href="#"></b:navLink>
                 <b:navLink value="Match" href="#"></b:navLink>
-                <b:navLink value="Login" href="faces/login.xhtml" style="margin-left: 100px"></b:navLink>
-                <b:navLink value="Sign Up" href="faces/register.xhtml"></b:navLink>
+                <b:navLink value="Login" rendered="#{!loginManagedBean.isLogin}" outcome="faces/login.xhtml" style="margin-left: 100px"></b:navLink>
+                <b:navLink value="Sign Up" rendered="#{!loginManagedBean.isLogin}" outcome="faces/register.xhtml"></b:navLink>
+                <b:navLink value="#{loginManagedBean.profile.displayName}" rendered="#{loginManagedBean.isLogin}" style="margin-left: 100px" href="faces/profile.xhtml"></b:navLink>
             </b:navbarLinks>
         </b:navBar>
     </h:body>

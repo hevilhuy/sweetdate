@@ -13,22 +13,22 @@
         <ui:composition template="template/master_layout.xhtml">
             <ui:define name="content">
                 <b:form>
-                    <b:container>
+                    
                         <b:row>
                             <b:column>
-                                <p:outputLabel>#{registerManagedBean.errors}</p:outputLabel>
+                                <p:outputLabel style="color:red;">#{registerManagedBean.errors}</p:outputLabel>
                             </b:column>
                         </b:row>
                         <b:row>
-                            <b:column medium-screen="6">
-                                <p:outputLabel>Display name: </p:outputLabel>
+                            <b:column medium-screen="4" style="text-align: right;">
+                                <p:outputLabel style="text-align: right;">Display name: </p:outputLabel>
                             </b:column>
                             <b:column medium-screen="6">
                                 <b:inputText value="#{registerManagedBean.profile.displayName}"></b:inputText>
                             </b:column>
                         </b:row>
                         <b:row>
-                            <b:column medium-screen="6">
+                            <b:column medium-screen="4" style="text-align: right;">
                                 <p:outputLabel>Username: </p:outputLabel>
                             </b:column>
 
@@ -40,7 +40,7 @@
                             </b:column>
                         </b:row>
                         <b:row>
-                            <b:column medium-screen="6">
+                            <b:column medium-screen="4" style="text-align: right;">
                                 <p:outputLabel>Password: </p:outputLabel>
                             </b:column>
 
@@ -49,8 +49,8 @@
                             </b:column>
                         </b:row>
                         <b:row>
-                            <b:column medium-screen="6">
-                                <p:outputLabel>Re-enter password:</p:outputLabel>
+                            <b:column medium-screen="4" style="text-align: right;">
+                                <p:outputLabel style="text-align: right;">Re-enter password:</p:outputLabel>
                             </b:column>
                             <b:column medium-screen="6">
                                 <b:inputSecret value="#{registerManagedBean.rePassword}"></b:inputSecret>
@@ -64,7 +64,7 @@
                                 <b:commandButton value="Reset" type="reset" look="danger"></b:commandButton>
                             </b:column>
                         </b:row>                
-                    </b:container>
+                    
                 </b:form>
             </ui:define>
         </ui:composition>

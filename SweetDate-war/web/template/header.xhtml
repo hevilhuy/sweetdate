@@ -1,12 +1,35 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <h1>Header</h1>
+        <b:row style="background: #001121">
+            <b:column span="3" offset="5">
+                <b:iconAwesome name="fa-envelope" style="color: #0296c0;margin-right: 8px"></b:iconAwesome>
+                <p:outputLabel style="color: #0296c0;font-weight: normal">sweetdate@gmail.com</p:outputLabel>
+            </b:column>
+            <b:column span="2" offset="1">
+                <p:outputLabel style="color: #0296c0;font-weight: normal">Find us on 
+                    <b:iconAwesome name="fa-facebook-square" style="color: #0296c0">
+                        <b:iconAwesome name="fa-reddit-square" style="color: #0296c0;margin-left: 2px"></b:iconAwesome>
+                        <b:iconAwesome name="fa-skype" style="color: #0296c0;margin-left: 2px"></b:iconAwesome>
+                    </b:iconAwesome></p:outputLabel>
+            </b:column>
+        </b:row>
+        <b:navBar brand="Sweet Date" style="background: #0076a3 url(../img/blue_pattern.gif)">
+            <b:navbarLinks pull="right" style="margin-right: 10px">
+                <b:navLink value="Home" href="#"></b:navLink>
+                <b:navLink value="Search" href="#"></b:navLink>
+                <b:navLink value="Match" href="#"></b:navLink>
+                <b:navLink value="Login" href="faces/login.xhtml" style="margin-left: 100px"></b:navLink>
+                <b:navLink value="Sign Up" href="faces/register.xhtml"></b:navLink>
+            </b:navbarLinks>
+        </b:navBar>
     </h:body>
 </html>
 

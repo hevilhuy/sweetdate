@@ -8,47 +8,45 @@
     <h:head>
         <title>Facelet Title</title>
     </h:head>
-    <h:body rendered="#{loginManagedBean.isLogin}">
+    <h:body>
         <ui:composition template="template/master_layout.xhtml">
             <ui:define name="content">
-                <b:form>
-                    <b:row>
-                        <b:column style="text-align: center;">
-                            <p:outputLabel style="color: red;" value="#{loginManagedBean.errors}"></p:outputLabel>
-                        </b:column>
-                    </b:row>
-                    <b:row>
-                        <b:column medium-screen="4" style="text-align: right;">
-                            <p:outputLabel>Username: </p:outputLabel>
-                        </b:column>
-                        <b:column medium-screen="6">
-                            <b:inputText value="#{loginManagedBean.profile.username}"></b:inputText>
-                        </b:column>
-                    </b:row>
-                    <b:row>
-                        <b:column medium-screen="4" style="text-align: right;">
-                            <p:outputLabel>Password: </p:outputLabel>
-                        </b:column>
-                        <b:column medium-screen="6">
-                            <b:inputSecret value="#{loginManagedBean.profile.password}"></b:inputSecret>
-                        </b:column>
-                    </b:row>
-                    <b:row>
-                        <b:column offset="5" span="1">
-                            <b:commandButton value="Login" look="success" action="#{loginManagedBean.login()}"></b:commandButton>
-                        </b:column>
-                        <b:column span="1">
-                            <b:commandButton value="Reset" look="danger" type="reset"></b:commandButton>
-                        </b:column>
-                    </b:row>
-                </b:form>
-            </ui:define>
-        </ui:composition>
-    </h:body>
-    <h:body rendered="#{!loginManagedBean.isLogin}">
-        <ui:composition template="template/master_layout.xhtml">
-            <ui:define name="content">
-                <p:outputLabel>You already logged in.</p:outputLabel>
+                <ui:fragment rendered="#{loginManagedBean.isLogin}">
+                    <p:outputLabel>You already logged in.</p:outputLabel>
+                </ui:fragment>
+                <ui:fragment rendered="#{!loginManagedBean.isLogin}">
+                    <b:form>
+                        <b:row>
+                            <b:column style="text-align: center;">
+                                <p:outputLabel style="color: red;" value="#{loginManagedBean.errors}"></p:outputLabel>
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column medium-screen="4" style="text-align: right;">
+                                <p:outputLabel>Username: </p:outputLabel>
+                            </b:column>
+                            <b:column medium-screen="6">
+                                <b:inputText value="#{loginManagedBean.profile.username}"></b:inputText>
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column medium-screen="4" style="text-align: right;">
+                                <p:outputLabel>Password: </p:outputLabel>
+                            </b:column>
+                            <b:column medium-screen="6">
+                                <b:inputSecret value="#{loginManagedBean.profile.password}"></b:inputSecret>
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column offset="5" span="1">
+                                <b:commandButton value="Login" look="success" action="#{loginManagedBean.login()}"></b:commandButton>
+                            </b:column>
+                            <b:column span="1">
+                                <b:commandButton value="Reset" look="danger" type="reset"></b:commandButton>
+                            </b:column>
+                        </b:row>
+                    </b:form>
+                </ui:fragment>
             </ui:define>
         </ui:composition>
     </h:body>

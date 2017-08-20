@@ -14,9 +14,9 @@ import javax.enterprise.context.RequestScoped;
  */
 @Named(value = "questionManagerManagedBean")
 @RequestScoped
-public class QuestionManagerManagedBean
+public class AdminQuestionListManagedBean
 {
-    public QuestionManagerManagedBean()
+    public AdminQuestionListManagedBean()
     {
     }
     

@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -12,7 +13,36 @@
         Normal user.
     </h:body>
     <h:body rendered="#{loginManagedBean.isAdmin}">
-        Admin.
+        <b:row>
+            <b:column>
+                <b:panel look="primary" title="Q&amp;A">
+                    <b:pillLinks>
+                        <b:navLink header="Question &amp; Answer"></b:navLink>
+                        <b:navLink icon="plus-sign" icon-align="right" span="12" value="Add"></b:navLink>
+                        <b:navLink span="12" icon="edit" icon-align="right" value="Edit"></b:navLink>
+                        <b:navLink span="12" icon="remove" icon-align="right" value="Remove"></b:navLink>
+                        <b:navLink span="12" icon="list" icon-align="right" value="View All"></b:navLink>
+                    </b:pillLinks>
+                </b:panel>
+                <b:panel look="primary" title="Profile">
+                    <b:pillLinks>
+                        <b:navLink header="Question &amp; Answer"></b:navLink>
+                        <b:navLink icon="plus-sign" icon-align="right" span="12" value="Add"></b:navLink>
+                        <b:navLink span="12" icon="edit" icon-align="right" value="Edit"></b:navLink>
+                        <b:navLink span="12" icon="remove" icon-align="right" value="Remove"></b:navLink>
+                        <b:navLink span="12" icon="list" icon-align="right" value="View All"></b:navLink>
+                    </b:pillLinks>
+                </b:panel>
+                <b:panel look="primary" title="Q&amp;A">
+                    <b:pillLinks>
+                        <b:navLink header="Question &amp; Answer"></b:navLink>
+                        <b:navLink icon="plus-sign" icon-align="right" span="12" value="Add"></b:navLink>
+                        <b:navLink span="12" icon="edit" icon-align="right" value="Edit"></b:navLink>
+                        <b:navLink span="12" icon="remove" icon-align="right" value="Remove"></b:navLink>
+                        <b:navLink span="12" icon="list" icon-align="right" value="View All"></b:navLink>
+                    </b:pillLinks>
+                </b:panel>
+            </b:column>
+        </b:row>
     </h:body>
 </html>
-

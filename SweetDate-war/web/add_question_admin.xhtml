@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="template/master_layout.xhtml">
+            <ui:define name="content">
+                <ui:fragment rendered="#{loginManagedBean.isAdmin}">
+                    <b:form>
+                        <b:row>
+                            <p:outputLabel>Question content</p:outputLabel>
+                        </b:row>
+                        <b:row>
+                            <b:inputTextarea value="#{addQuestionAdminManagedBean.question.questionContent}"></b:inputTextarea>
+                        </b:row>
+                        <b:row>
+                            <p:outputLabel>Question type</p:outputLabel>
+                        </b:row>
+                        <b:row>
+                            <b:radiobutton value="#{addQuestionAdminManagedBean.question.questionTypeId.questionTypeId}" itemLabel="Single choice" itemValue="1" required="true"></b:radiobutton>
+                            <b:radiobutton value="#{addQuestionAdminManagedBean.question.questionTypeId.questionTypeId}" itemLabel="Multiple choice" itemValue="2"></b:radiobutton>
+                        </b:row>
+                        <b:row>
+                            <b:dataTable id="answers" value="#{addQuestionAdminManagedBean.answerList}" var="answer">
+                                <b:dataTableColumn>
+                                    <b:inputTextarea span="12" value="#{answer.answerContent}"></b:inputTextarea>
+                                </b:dataTableColumn>
+                                <b:dataTableColumn>
+                                    <b:commandButton update="answers" value="Delete" immediate="true"></b:commandButton>
+                                </b:dataTableColumn>
+                            </b:dataTable>
+                            <b:commandButton actionListener="#{addQuestionAdminManagedBean.addAnswer}" update="answers" value="Add New Answer" immediate="true"></b:commandButton>
+                        </b:row>
+                    </b:form>
+                </ui:fragment>
+                <ui:fragment rendered="#{!loginManagedBean.isAdmin}">
+                    <p:outputLabel>You don't have permission.</p:outputLabel>
+                </ui:fragment>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

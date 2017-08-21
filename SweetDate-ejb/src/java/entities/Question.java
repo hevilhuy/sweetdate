@@ -11,7 +11,11 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -39,8 +43,9 @@ public class Question implements Serializable
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
-    @NotNull
+//    @Basic(optional = false)
+//    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "QuestionID")
     private Integer questionID;
     @Basic(optional = false)
@@ -48,6 +53,9 @@ public class Question implements Serializable
     @Size(min = 1, max = 50)
     @Column(name = "QuestionContent")
     private String questionContent;
+    @JoinColumn(name = "QuestionTypeId", referencedColumnName = "QuestionTypeId")
+    @ManyToOne(optional = false)
+    private QuestionType questionTypeId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "questionId")
     private Collection<QuestionAnswer> questionAnswerCollection;
 
@@ -84,6 +92,16 @@ public class Question implements Serializable
     public void setQuestionContent(String questionContent)
     {
         this.questionContent = questionContent;
+    }
+
+    public QuestionType getQuestionTypeId()
+    {
+        return questionTypeId;
+    }
+
+    public void setQuestionTypeId(QuestionType questionTypeId)
+    {
+        this.questionTypeId = questionTypeId;
     }
 
     @XmlTransient

@@ -12,7 +12,9 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.ejb.EJB;
+import javax.faces.event.ActionEvent;
 
 /**
  *
@@ -25,23 +27,64 @@ public class QuestionListAdminManagedBean implements Serializable
 
     @EJB
     private ProfileFacadeLocal profileFacade;
-
     @EJB
     private QuestionFacadeLocal questionFacade;
     private ArrayList<Question> questionList;
+    private ArrayList<Question> selected;
+
     public QuestionListAdminManagedBean()
     {
-        questionList=new ArrayList<>();
+        selected=new ArrayList<>();
     }
 
     public ArrayList<Question> getQuestionList()
     {
-        questionList=new ArrayList<>(questionFacade.findAll());
+        if (questionList == null)
+        {
+            questionList = new ArrayList<>(questionFacade.findAll());
+        }
         return questionList;
     }
 
     public void setQuestionList(ArrayList<Question> questionList)
     {
         this.questionList = questionList;
+    }
+
+    public void delete(ActionEvent event)
+    {
+        for(Question q : selected)
+        {
+            System.out.println("SELECTED: "+q.getQuestionContent());
+            questionList.remove(q);
+            questionFacade.remove(q);
+            questionFacade=null;
+        }
+    }
+    
+    public void onSelect(String indexes)
+    {
+        Question q=questionList.get(Integer.parseInt(indexes));
+        selected.add(q);
+    }
+    
+    public void onDeselect(String indexes)
+    {
+        Question q=questionList.get(Integer.parseInt(indexes));
+        selected.remove(q);
+    }
+
+    public ArrayList<Question> getSelected()
+    {
+        if(selected==null)
+        {
+            selected=new ArrayList<>();
+        }
+        return selected;
+    }
+
+    public void setSelected(ArrayList<Question> selected)
+    {
+        this.selected = selected;
     }
 }

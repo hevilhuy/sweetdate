@@ -14,7 +14,10 @@
             <ui:define name="content">
                 <ui:fragment rendered="#{loginManagedBean.isAdmin}">
                     <b:form>
-                        <b:dataTable value="#{questionListAdminManagedBean.questionList}" var="question" >
+                        <b:dataTable id="datatable" value="#{questionListAdminManagedBean.questionList}" var="question"
+                                     onselect="ajax:questionListAdminManagedBean.onSelect(indexes)"
+                                     ondeselect="ajax:questionListAdminManagedBean.onDeselect(indexes)"
+                                     select="true" selectionMode="multiple">
                             <b:dataTableColumn value="#{question.questionContent}">
                                 <f:facet name="header">
                                     <p:outputLabel>Question</p:outputLabel>
@@ -26,6 +29,7 @@
                                 </f:facet>
                             </b:dataTableColumn>
                         </b:dataTable>
+                        <b:commandButton actionListener="#{questionListAdminManagedBean.delete(event)}" value="Delete" immediate="true" update="datatable"></b:commandButton>
                     </b:form>
                 </ui:fragment>
                 <ui:fragment rendered="#{!loginManagedBean.isAdmin}">

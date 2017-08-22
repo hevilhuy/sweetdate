@@ -13,6 +13,7 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -58,6 +59,7 @@ public class LoginManagedBean implements Serializable
                 isLogin=true;
                 profile=profileInDb;
                 isAdmin=profile.getRoleId().getRoleId()==1;
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", profile.getUsername());
                 return AddressCompletor.complete("index");
             }
         }

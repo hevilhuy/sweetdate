@@ -5,9 +5,14 @@
  */
 package managedBeans;
 
+import beans.ProfileFacadeLocal;
+import entities.Profile;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -17,8 +22,32 @@ import java.io.Serializable;
 @SessionScoped
 public class ProfileManagedBean implements Serializable
 {
+
+    @EJB
+    private ProfileFacadeLocal profileFacade;
+    private Profile profile;
     public ProfileManagedBean()
     {
     }
     
+    @PostConstruct
+    public void init()
+    {
+        String username=FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username").toString();
+        profile=username.equals("")?null:profileFacade.find(username);
+        if(profile==null)
+        {
+            profile=new Profile();
+        }
+    }
+
+    public Profile getProfile()
+    {
+        return profile;
+    }
+
+    public void setProfile(Profile profile)
+    {
+        this.profile = profile;
+    }
 }

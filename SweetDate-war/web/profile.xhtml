@@ -1,12 +1,54 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <ui:composition template="template/master_layout.xhtml">
+            <ui:define name="content">
+                <h1 style="font-family: 'Yesteryear', cursive">#{profileManagedBean.profile.displayName}</h1>
+                <hr style="margin: 0px"/>
+                <p:outputLabel style="font-weight: lighter;">#{profileManagedBean.profile.country}</p:outputLabel>
+                <b:row>
+                    <b:column span="4">
+                        <b:image  medium-screen="12" value="https://seventhqueen.com/demo/SweetDate/DefaultHeader/Boxed/assets/images/gallery-carousel/big_image_profile_08.jpg"></b:image>
+                    </b:column>
+                    <b:column span="6">
+                        <b:tabView active-index="1" pills="true" contentStyle="border: 1px solid #ddd;padding:10px">
+                            <b:tab title="Looking for">
+                                <p:outputLabel style="font-weight: lighter;">#{profileManagedBean.profile.lookingFor}</p:outputLabel>
+                            </b:tab>
+                            <b:tab title="My Informations">
+                                <b:row>
+                                    <b:column span="2">
+                                        <p:outputLabel>Birthdate: </p:outputLabel>
+                                    </b:column>
+                                    <b:column span="4">
+                                        <p:outputLabel style="font-weight: lighter;">#{profileManagedBean.profile.birthdate}</p:outputLabel>
+                                    </b:column>
+                                </b:row>
+                                <b:row>
+                                    <b:column span="2">
+                                        <p:outputLabel>Gender: </p:outputLabel>
+                                    </b:column>
+                                    <b:column span="4">
+                                        <p:outputLabel style="font-weight: lighter;">#{profileManagedBean.profile.gender}</p:outputLabel>
+                                    </b:column>
+                                </b:row>
+                            </b:tab>
+                            <b:tab title="About me">
+                                <p:outputLabel>#{profileManagedBean.profile.about}</p:outputLabel>
+                            </b:tab>
+                        </b:tabView>
+                    </b:column>
+                </b:row>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
 

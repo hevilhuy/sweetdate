@@ -13,6 +13,9 @@
         <ui:composition template="template/master_layout.xhtml">
             <ui:define name="content">
                 <ui:fragment rendered="#{loginManagedBean.isAdmin}">
+                    <h:form id="initializePageDataForm">
+                        <p:remoteCommand name="initializePageDataCommand" autoRun="true" action="#{questionListAdminManagedBean.init()}"/>
+                    </h:form>
                     <b:form>
                         <b:dataTable id="datatable" value="#{questionListAdminManagedBean.questionList}" var="question"
                                      onselect="ajax:questionListAdminManagedBean.onSelect(indexes)"
@@ -28,8 +31,21 @@
                                     <p:outputLabel>Type</p:outputLabel>
                                 </f:facet>
                             </b:dataTableColumn>
+                            <b:dataTableColumn value="#{question.questionAnswerCollection.size()}">
+                                <f:facet name="header">
+                                    <p:outputLabel>Number of Answers</p:outputLabel>
+                                </f:facet>
+                            </b:dataTableColumn>
+                            <b:dataTableColumn>
+                                <f:facet name="header">
+                                    Commands
+                                </f:facet>
+                                <b:commandButton look="primary" action="#{questionListAdminManagedBean.edit(question.questionID)}" value="Edit Question">
+                                    <f:ajax onerror=""></f:ajax>
+                                </b:commandButton>
+                            </b:dataTableColumn>
                         </b:dataTable>
-                        <b:commandButton actionListener="#{questionListAdminManagedBean.delete(event)}" value="Delete" immediate="true" update="datatable"></b:commandButton>
+                        <b:commandButton actionListener="#{questionListAdminManagedBean.delete(event)}" look="danger" value="Delete" immediate="true" update="datatable"></b:commandButton>
                     </b:form>
                 </ui:fragment>
                 <ui:fragment rendered="#{!loginManagedBean.isAdmin}">

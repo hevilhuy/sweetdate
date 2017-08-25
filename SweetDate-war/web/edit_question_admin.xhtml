@@ -4,7 +4,9 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:t="http://java.sun.com/jsf/passthrough">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -12,30 +14,31 @@
         <ui:composition template="template/master_layout.xhtml">
             <ui:define name="content">
                 <ui:fragment rendered="#{loginManagedBean.isAdmin}">
+<!--                    <h:form id="initializePageDataForm">
+                        <p:remoteCommand name="initializePageDataCommand" autoRun="true" action="#{editQuestionAdminManagedBean.init()}"/>
+                    </h:form>-->
+                    <f:metadata>
+                        <f:viewParam name="questionId" value="#{editQuestionAdminManagedBean.questionId}"/>
+                    </f:metadata>
                     <b:form>
+                        <b:row>
+                            <p:outputLabel style="color:red;">#{editQuestionAdminManagedBean.error}</p:outputLabel>
+                        </b:row>
                         <b:row>
                             <p:outputLabel>Question content</p:outputLabel>
                         </b:row>
                         <b:row>
-                            <b:inputTextarea value="#{addQuestionAdminManagedBean.question.questionContent}"></b:inputTextarea>
+                            <b:inputTextarea value="#{editQuestionAdminManagedBean.question.questionContent}"></b:inputTextarea>
                         </b:row>
                         <b:row>
                             <p:outputLabel>Question type</p:outputLabel>
                         </b:row>
                         <b:row>
-                            <b:radiobutton value="#{addQuestionAdminManagedBean.question.questionTypeId.questionTypeId}" itemLabel="Single choice" itemValue="1" required="true"></b:radiobutton>
-                            <b:radiobutton value="#{addQuestionAdminManagedBean.question.questionTypeId.questionTypeId}" itemLabel="Multiple choice" itemValue="2"></b:radiobutton>
+                            <b:radiobutton value="#{editQuestionAdminManagedBean.question.questionTypeId.questionTypeId}" itemLabel="Single choice" itemValue="1" required="true"></b:radiobutton>
+                            <b:radiobutton value="#{editQuestionAdminManagedBean.question.questionTypeId.questionTypeId}" itemLabel="Multiple choice" itemValue="2"></b:radiobutton>
                         </b:row>
                         <b:row>
-                            <b:dataTable id="answers" value="#{addQuestionAdminManagedBean.answerList}" var="answer">
-                                <b:dataTableColumn>
-                                    <b:inputTextarea span="12" value="#{answer.answerContent}"></b:inputTextarea>
-                                </b:dataTableColumn>
-                                <b:dataTableColumn>
-                                    <b:commandButton update="answers" value="Delete" immediate="true"></b:commandButton>
-                                </b:dataTableColumn>
-                            </b:dataTable>
-                            <b:commandButton actionListener="#{addQuestionAdminManagedBean.addAnswer}" update="answers" value="Add New Answer" immediate="true"></b:commandButton>
+                            <b:commandButton action="#{editQuestionAdminManagedBean.saveChanges()}" value="Save Changes"></b:commandButton>
                         </b:row>
                     </b:form>
                 </ui:fragment>

@@ -5,6 +5,7 @@
  */
 package managedBeans;
 
+import beans.AddressCompletor;
 import beans.ProfileFacadeLocal;
 import beans.QuestionFacadeLocal;
 import entities.Question;
@@ -12,7 +13,7 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.event.ActionEvent;
 
@@ -31,18 +32,22 @@ public class QuestionListAdminManagedBean implements Serializable
     private QuestionFacadeLocal questionFacade;
     private ArrayList<Question> questionList;
     private ArrayList<Question> selected;
+    private String refresh;
 
     public QuestionListAdminManagedBean()
     {
-        selected=new ArrayList<>();
+    }
+
+    @PostConstruct
+    public void init()
+    {
+        questionList = new ArrayList<>(questionFacade.findAll());
+        selected = new ArrayList<>();
     }
 
     public ArrayList<Question> getQuestionList()
     {
-        if (questionList == null)
-        {
-            questionList = new ArrayList<>(questionFacade.findAll());
-        }
+        questionList = new ArrayList<>(questionFacade.findAll());
         return questionList;
     }
 
@@ -53,38 +58,65 @@ public class QuestionListAdminManagedBean implements Serializable
 
     public void delete(ActionEvent event)
     {
-        for(Question q : selected)
+        for (Question q : selected)
         {
-            System.out.println("SELECTED: "+q.getQuestionContent());
-            questionList.remove(q);
+            System.out.println("SELECTED: " + q.getQuestionContent());
             questionFacade.remove(q);
-            questionFacade=null;
+            questionList = new ArrayList<>(questionFacade.findAll());
+            selected = new ArrayList<>();
         }
     }
-    
+
     public void onSelect(String indexes)
     {
-        Question q=questionList.get(Integer.parseInt(indexes));
-        selected.add(q);
+        System.out.println("INDEX ONSELECT " + indexes);
+        try
+        {
+            Question q = questionList.get(Integer.parseInt(indexes));
+            selected.add(q);
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
-    
+
     public void onDeselect(String indexes)
     {
-        Question q=questionList.get(Integer.parseInt(indexes));
-        selected.remove(q);
+        System.out.println("INDEX DESELECT " + indexes);
+        try
+        {
+            Question q = questionList.get(Integer.parseInt(indexes));
+            selected.remove(q);
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 
     public ArrayList<Question> getSelected()
     {
-        if(selected==null)
-        {
-            selected=new ArrayList<>();
-        }
         return selected;
     }
 
     public void setSelected(ArrayList<Question> selected)
     {
         this.selected = selected;
+    }
+
+    public String getRefresh()
+    {
+        return refresh;
+    }
+
+    public void setRefresh(String refresh)
+    {
+        this.refresh = refresh;
+    }
+    
+    public String edit(String id)
+    {
+        return AddressCompletor.complete("edit_question_admin.xhtml?")+"&questionId="+id;
     }
 }

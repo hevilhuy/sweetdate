@@ -44,9 +44,6 @@ public class EditQuestionAdminManagedBean implements Serializable
     @PostConstruct
     public void init()
     {
-//        questionTypeId="";
-//        question = new Question();
-//        question.setQuestionTypeId(new QuestionType());
         if (questionId == null || questionId.equals("new") || questionId.equals(""))
         {
             question = new Question();
@@ -66,7 +63,7 @@ public class EditQuestionAdminManagedBean implements Serializable
             catch (Exception ex)
             {
                 question = new Question();
-                question.setQuestionTypeId(new QuestionType());
+                question.setQuestionTypeId(questionTypeFacade.find(1));
             }
         }
         FacesContext.getCurrentInstance().renderResponse();

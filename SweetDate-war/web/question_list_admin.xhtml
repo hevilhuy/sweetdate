@@ -43,6 +43,9 @@
                                 <b:commandButton look="primary" action="#{questionListAdminManagedBean.edit(question.questionID)}" value="Edit Question">
                                     <f:ajax onerror=""></f:ajax>
                                 </b:commandButton>
+                                <b:commandButton look="primary" action="#{questionListAdminManagedBean.editAnswer(question.questionID)}" value="Edit Answer">
+                                    <f:ajax onerror=""></f:ajax>
+                                </b:commandButton>
                             </b:dataTableColumn>
                         </b:dataTable>
                         <b:commandButton actionListener="#{questionListAdminManagedBean.delete(event)}" look="danger" value="Delete" immediate="true" update="datatable"></b:commandButton>

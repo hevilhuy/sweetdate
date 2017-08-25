@@ -119,4 +119,9 @@ public class QuestionListAdminManagedBean implements Serializable
     {
         return AddressCompletor.complete("edit_question_admin.xhtml?")+"&questionId="+id;
     }
+    
+        public String editAnswer(String id)
+    {
+        return AddressCompletor.complete("edit_answer_admin.xhtml?")+"&questionId="+id;
+    }
 }

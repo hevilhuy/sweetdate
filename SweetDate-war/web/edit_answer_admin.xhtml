@@ -3,37 +3,50 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <b:row>
-            <b:dataTable id="answers" value="#{addQuestionAdminManagedBean.answerList}" var="answer"
-                         onselect="ajax:addQuestionAdminManagedBean.onSelect(indexes)"
-                         ondeselect="ajax:addQuestionAdminManagedBean.onDeselect(indexes)"
-                         select="true" selectionMode="multiple">
-                <b:dataTableColumn>
-                    <f:facet name="header">
-                        <p:outputLabel>Answer</p:outputLabel>
-                    </f:facet>
-                    <b:inputTextarea medium-screen="10" value="#{answer.answerContent}"></b:inputTextarea>
-                </b:dataTableColumn>
-                <b:dataTableColumn>
-                    <f:facet name="header">
-                        <p:outputLabel>Control</p:outputLabel>
-                    </f:facet>
-                    <b:commandButton onclick="ajax:addQuestionAdminManagedBean.delete(answer)" ajax="true" update="answers" look="danger" value="Delete Selected Answers" immediate="true"></b:commandButton>
-                </b:dataTableColumn>
-            </b:dataTable>
-        </b:row>
-        <b:row>
-            <b:column>
-                <b:commandButton actionListener="#{addQuestionAdminManagedBean.addAnswer(event)}" update="answers" look="primary" value="Add New Answer" immediate="true"></b:commandButton>
-                <b:commandButton value="Save Changes" look="success" style="margin-left: 10px"></b:commandButton>
-            </b:column>
-        </b:row>
+        <ui:composition template="template/master_layout.xhtml">
+            <ui:define name="content">
+<!--                <ui:fragment rendered="#{loginManagedBean.isAdmin}">-->
+                <ui:fragment rendered="true">
+                    <f:metadata>
+                        <f:viewParam name="questionId" value="#{editAnswerManagedBean.questionId}"></f:viewParam>
+                        <f:viewAction action="#{editAnswerManagedBean.init()}"></f:viewAction>
+                    </f:metadata>
+                    <p:outputLabel value="#{editAnswerManagedBean.question.questionContent}"></p:outputLabel>
+                    <b:form>
+                        <b:row>
+                            <b:dataTable id="answers" value="#{editAnswerManagedBean.answerList}" var="answer"
+                                         onselect="ajax:editAnswerManagedBean.onSelect(indexes)"
+                                         ondeselect="ajax:editAnswerManagedBean.onDeselect(indexes)"
+                                         select="true" selectionMode="multiple">
+                                <b:dataTableColumn>
+                                    <f:facet name="header">
+                                        <p:outputLabel>Answer</p:outputLabel>
+                                    </f:facet>
+                                    <b:inputTextarea medium-screen="10" value="#{answer.answerContent}"></b:inputTextarea>
+                                </b:dataTableColumn>
+                            </b:dataTable>
+                        </b:row>
+                        <b:row>
+                            <b:column>
+                                <b:commandButton actionListener="#{editAnswerManagedBean.addAnswer(event)}" update="answers" look="primary" value="Add New Answer" immediate="true"></b:commandButton>
+                                <b:commandButton actionListener="#{editAnswerManagedBean.deleteAnswer(event)}" update="answers" value="Delete" look="danger" style="margin-left: 10px" immediate="true"></b:commandButton>
+                                <b:commandButton value="Save Changes" look="success" update="answers" style="margin-left: 10px"></b:commandButton>
+                            </b:column>
+                        </b:row>
+                    </b:form>
+                </ui:fragment>
+<!--                <ui:fragment rendered="#{!loginManagedBean.isAdmin}">
+                    <p:outputLabel>You don't have permission.</p:outputLabel>
+                </ui:fragment>-->
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
 

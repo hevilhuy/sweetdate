@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="template/master_layout.xhtml">
+            <ui:define name="content">
+<!--                <ui:fragment rendered="#{loginManagedBean.isLogin}">-->
+                <ui:fragment rendered="true">
+                    <b:form enctype="multipart/form-data">
+                        <b:tabView activeIndex="1">
+                            <b:tab title="Change Password">
+                                <b:row>
+                                    <b:column medium-screen="6" style="text-align: right">
+                                        <p:outputLabel>Old password:</p:outputLabel>
+                                    </b:column>
+                                    <b:column medium-screen="6">
+                                        <b:inputSecret value="#{editProfileManagedBean.oldPassword}"></b:inputSecret>
+                                    </b:column>
+                                </b:row>
+                                <b:row>
+                                    <b:column medium-screen="6" style="text-align: right">
+                                        <p:outputLabel>New password:</p:outputLabel>
+                                    </b:column>
+                                    <b:column medium-screen="6">
+                                        <b:inputSecret value="#{editProfileManagedBean.newPassword}"></b:inputSecret>
+                                    </b:column>
+                                </b:row>
+                                <b:row>
+                                    <b:column medium-screen="6" style="text-align: right">
+                                        <p:outputLabel>Re-enter new password:</p:outputLabel>
+                                    </b:column>
+                                    <b:column medium-screen="6">
+                                        <b:inputSecret value="#{editProfileManagedBean.newPassword2}"></b:inputSecret>
+                                    </b:column>
+                                </b:row>
+                                <b:row>
+                                    <p:growl id="pwmsg"  showDetail="true" life="2000"/>
+                                    <b:column medium-screen="12" style="text-align: center">
+                                        <b:commandButton actionListener="#{editProfileManagedBean.changePassword()}" update="pwmsg" value="Save Changes" look="success"></b:commandButton>
+                                    </b:column>
+                                </b:row>                    
+                            </b:tab>
+                            <b:tab title="Basic information">
+                                <b:row>
+                                    <b:column medium-screen="6" style="text-align: right">
+                                        <p:outputLabel>Display name:</p:outputLabel>
+                                    </b:column>
+                                    <b:column medium-screen="6">
+                                        <b:inputText value="#{editProfileManagedBean.profile.displayName}"></b:inputText>
+                                    </b:column>
+                                </b:row>
+                                <b:row>
+                                    <b:column medium-screen="6" style="text-align: right">
+                                        <p:outputLabel>Come from:</p:outputLabel>
+                                    </b:column>
+                                    <b:column medium-screen="6">
+                                        <b:inputText value="#{editProfileManagedBean.profile.country}"></b:inputText>
+                                    </b:column>
+                                </b:row>
+                                <b:row>
+                                    <b:column medium-screen="6" style="text-align: right">
+                                        <p:outputLabel>Gender:</p:outputLabel>
+                                    </b:column>
+                                    <b:column medium-screen="6">
+                                        <b:radiobutton value="#{editProfileManagedBean.profile.gender}" itemValue="1" itemLabel="Male" required="true"></b:radiobutton>
+                                        <b:radiobutton value="#{editProfileManagedBean.profile.gender}" itemValue="0" itemLabel="Female"></b:radiobutton>
+                                    </b:column>
+                                </b:row>
+                                <b:row>
+                                    <b:column medium-screen="6" style="text-align: right">
+                                        <p:outputLabel>Birthdate:</p:outputLabel>
+                                    </b:column>
+                                    <b:column medium-screen="6">
+                                        <b:dateTimePicker value="#{editProfileManagedBean.birthdate}" showTime="false" showDate="true"></b:dateTimePicker>
+                                    </b:column>
+                                </b:row>
+                                <b:row>
+                                    <b:column style="text-align: center;margin-top: 15px;">
+                                        <p:growl id="bsmsg"  showDetail="true" life="2000"/>
+                                        <b:commandButton actionListener="#{editProfileManagedBean.saveBasic()}" update="bsmsg" value="Save Changes" look="success"></b:commandButton>
+                                    </b:column>
+                                </b:row>
+                            </b:tab>
+                            <b:tab title="Looking For">
+                                <b:row>
+                                    <b:column>Describe the personalities of your desired partner:</b:column>
+                                    <b:column>
+                                        <b:inputTextarea value="#{editProfileManagedBean.profile.lookingFor}"></b:inputTextarea>
+                                    </b:column>
+                                </b:row>
+                                <b:row>
+                                    <b:column style="text-align: center;">
+                                        <p:growl id="lfmsg"  showDetail="true" life="2000"/>
+                                        <b:commandButton actionListener="#{editProfileManagedBean.saveLookingFor()}" update="lfmsg" value="Save Changes" look="success"></b:commandButton>
+                                    </b:column>
+                                </b:row>
+                            </b:tab>
+                            <b:tab title="About Me">
+                                <b:row>
+                                    <b:column>Describe your personalities:</b:column>
+                                    <b:column>
+                                        <b:inputTextarea value="#{editProfileManagedBean.profile.about}"></b:inputTextarea>
+                                    </b:column>
+                                </b:row>
+                                <b:row>
+                                    <b:column style="text-align: center;">
+                                        <p:growl id="amsg" showDetail="true" life="2000"/>
+                                        <b:commandButton actionListener="#{editProfileManagedBean.saveAbout()}" update="amsg" value="Save Changes" look="success"></b:commandButton>
+                                    </b:column>
+                                </b:row>
+                            </b:tab>
+                            <b:tab title="Avatar">
+                                <b:row>
+                                    <b:column medium-screen="6">
+                                        <p:outputLabel>Your current avatar: </p:outputLabel>
+                                        <b:image id="showAvatar" medium-screen="12" value="#{editProfileManagedBean.avatarImg}"></b:image>
+                                    </b:column>
+                                    <b:column medium-screen="6">
+                                        <p:growl id="avatarmsg" showDetail="true" life="2000"/>
+                                        <p:fileUpload value="#{editProfileManagedBean.avatarFile}" fileUploadListener="#{editProfileManagedBean.uploadAvatar}" mode="advanced" dragDropSupport="false"
+                                                      update="avatarmsg showAvatar" sizeLimit="10485760" fileLimit="1" allowTypes="/(\.|\/)(jpe?g|png)$/" />
+                                    </b:column>
+                                </b:row>
+                            </b:tab>
+                        </b:tabView>
+                    </b:form>
+                </ui:fragment>
+<!--                <ui:fragment rendered="#{!loginManagedBean.isLogin}">
+    <p:outputLabel>You don't have permission.</p:outputLabel>
+</ui:fragment>-->
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

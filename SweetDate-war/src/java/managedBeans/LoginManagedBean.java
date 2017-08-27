@@ -30,11 +30,12 @@ public class LoginManagedBean implements Serializable
     private boolean isLogin;
     private boolean isAdmin;
     private String errors;
+
     public LoginManagedBean()
     {
-        profile=new Profile();
-        isLogin=false;
-        isAdmin=false;
+        profile = new Profile();
+        isLogin = false;
+        isAdmin = false;
     }
 
     public Profile getProfile()
@@ -46,27 +47,27 @@ public class LoginManagedBean implements Serializable
     {
         this.profile = profile;
     }
-    
+
     public String login()
     {
-        errors="";
-        isLogin=false;
-        Profile profileInDb=profileFacade.find(profile.getUsername());
-        if(profileInDb!=null)
+        errors = "";
+        isLogin = false;
+        Profile profileInDb = profileFacade.find(profile.getUsername());
+        if (profileInDb != null)
         {
-            if(profileInDb.getPassword().equals(PasswordManager.getMD5Hex(profile.getPassword())))
+            if (profileInDb.getPassword().equals(PasswordManager.getMD5Hex(profile.getPassword())))
             {
-                isLogin=true;
-                profile=profileInDb;
-                isAdmin=profile.getRoleId().getRoleId()==1;
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", profile.getUsername());
+                isLogin = true;
+                profile = profileInDb;
+                isAdmin = profile.getRoleId().getRoleId() == 1;
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentProfile", profile);
                 return AddressCompletor.complete("index");
             }
         }
         else
         {
-            isLogin=false;
-            errors="Wrong username or password";
+            isLogin = false;
+            errors = "Wrong username or password";
         }
         return "login";
     }
@@ -99,5 +100,15 @@ public class LoginManagedBean implements Serializable
     public void setIsAdmin(boolean isAdmin)
     {
         this.isAdmin = isAdmin;
+    }
+
+    public String logout()
+    {
+        profile = new Profile();
+        isLogin = false;
+        isAdmin = false;
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("currentProfile");
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return AddressCompletor.complete("index");
     }
 }

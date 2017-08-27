@@ -4,13 +4,18 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:b="http://bootsfaces.net/ui">
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
         <ui:composition template="template/master_layout.xhtml">
             <ui:define name="content">
+                <f:metadata>
+                    <f:viewParam name="username" value="#{profileManagedBean.username}"></f:viewParam>
+                    <f:viewAction action="#{profileManagedBean.init()}"></f:viewAction>
+                </f:metadata>
                 <h1 style="font-family: 'Yesteryear', cursive">#{profileManagedBean.profile.displayName}</h1>
                 <hr style="margin: 0px"/>
                 <p:outputLabel style="font-weight: lighter;">#{profileManagedBean.profile.country}</p:outputLabel>
@@ -37,7 +42,8 @@
                                         <p:outputLabel>Gender: </p:outputLabel>
                                     </b:column>
                                     <b:column span="4">
-                                        <p:outputLabel style="font-weight: lighter;">#{profileManagedBean.profile.gender}</p:outputLabel>
+                                        <b:image rendered="#{profileManagedBean.profile.gender==0}" tooltip="Female" width="15px" height="15px" value="/img/female.png"></b:image>
+                                        <b:image rendered="#{profileManagedBean.profile.gender==1}" tooltip="Male" width="15px" height="15px" value="/img/male.png"></b:image>
                                     </b:column>
                                 </b:row>
                             </b:tab>

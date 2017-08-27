@@ -40,10 +40,10 @@
                                 <f:facet name="header">
                                     Commands
                                 </f:facet>
-                                <b:commandButton look="primary" action="#{questionListAdminManagedBean.edit(question.questionID)}" value="Edit Question">
+                                <b:commandButton look="primary" action="#{questionListAdminManagedBean.edit(question.questionID)}" value="Edit Question" style="margin-right: 10px">
                                     <f:ajax onerror=""></f:ajax>
                                 </b:commandButton>
-                                <b:commandButton look="primary" action="#{questionListAdminManagedBean.editAnswer(question.questionID)}" value="Edit Answer">
+                                <b:commandButton look="info" action="#{questionListAdminManagedBean.editAnswer(question.questionID)}" value="Edit Answer">
                                     <f:ajax onerror=""></f:ajax>
                                 </b:commandButton>
                             </b:dataTableColumn>

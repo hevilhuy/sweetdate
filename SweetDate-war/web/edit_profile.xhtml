@@ -120,11 +120,11 @@
                                 <b:row>
                                     <b:column medium-screen="6">
                                         <p:outputLabel>Your current avatar: </p:outputLabel>
-                                        <b:image id="showAvatar" medium-screen="12" value="#{editProfileManagedBean.avatarImg}"></b:image>
+                                        <p:graphicImage id="showAvatar" class="col-md-12" value="#{editProfileManagedBean.avatarImg}"></p:graphicImage>
                                     </b:column>
                                     <b:column medium-screen="6">
                                         <p:growl id="avatarmsg" showDetail="true" life="2000"/>
-                                        <p:fileUpload value="#{editProfileManagedBean.avatarFile}" fileUploadListener="#{editProfileManagedBean.uploadAvatar}" mode="advanced" dragDropSupport="false"
+                                        <p:fileUpload class="col-md-12" fileUploadListener="#{editProfileManagedBean.uploadAvatar}" dragDropSupport="false"
                                                       update="avatarmsg showAvatar" sizeLimit="10485760" fileLimit="1" allowTypes="/(\.|\/)(jpe?g|png)$/" />
                                     </b:column>
                                 </b:row>

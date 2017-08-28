@@ -21,7 +21,7 @@
                 <p:outputLabel style="font-weight: lighter;">#{profileManagedBean.profile.country}</p:outputLabel>
                 <b:row>
                     <b:column span="4">
-                        <b:image  medium-screen="12" value="https://seventhqueen.com/demo/SweetDate/DefaultHeader/Boxed/assets/images/gallery-carousel/big_image_profile_08.jpg"></b:image>
+                        <p:graphicImage id="showAvatar" class="col-md-12" value="#{profileManagedBean.avatarImg}"></p:graphicImage>
                     </b:column>
                     <b:column span="6">
                         <b:tabView active-index="1" pills="true" contentStyle="border: 1px solid #ddd;padding:10px">

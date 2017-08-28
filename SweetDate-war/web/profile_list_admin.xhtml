@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:b="http://bootsfaces.net/ui">
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -16,12 +17,30 @@
                     <h:form id="initializePageDataForm">
                         <p:remoteCommand name="initializePageDataCommand" autoRun="true" action="#{profileListAdminManagedBean.init()}"/>
                     </h:form>
-                    <b:dataTable id="datatable" value="#{profileListAdminManagedBean.profileList}" var="profile"
-                                 onselect="ajax:profileListAdminManagedBean.onSelect(indexes)"
-                                 ondeselect="ajax:profileListAdminManagedBean.onDeselect(indexes)"
-                                 select="true" selectionMode="multiple">
-
-                    </b:dataTable>
+                    <b:form>
+                        <b:dataTable id="datatable" value="#{profileListAdminManagedBean.profileList}" var="profile"
+                                     onselect="ajax:profileListAdminManagedBean.onSelect(indexes)"
+                                     ondeselect="ajax:profileListAdminManagedBean.onDeselect(indexes)"
+                                     select="true" selectionMode="multiple">
+                            <b:dataTableColumn value="#{profile.username}">
+                                <f:facet name="header">
+                                    <p:outputLabel>Username</p:outputLabel>
+                                </f:facet>
+                            </b:dataTableColumn>
+                            <b:dataTableColumn>
+                                <f:facet name="header">
+                                    <p:outputLabel>Status</p:outputLabel>
+                                </f:facet>
+                                <h:outputLabel value="#{profileListAdminManagedBean.getStatus(profile.active)}"></h:outputLabel>
+                            </b:dataTableColumn>
+                        </b:dataTable>
+                        <b:commandButton update="datatable" look="primary" actionListener="#{profileListAdminManagedBean.active()}" value="Active Profile" style="margin-right: 10px">
+                            <f:ajax onerror=""></f:ajax>
+                        </b:commandButton>
+                        <b:commandButton update="datatable" look="primary" actionListener="#{profileListAdminManagedBean.deactive()}" value="Deactive Profile">
+                            <f:ajax onerror=""></f:ajax>
+                        </b:commandButton>
+                    </b:form>
                 </ui:fragment>
                 <ui:fragment rendered="#{!loginManagedBean.isAdmin}">
                     You don't have permission.

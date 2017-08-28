@@ -61,8 +61,9 @@ public class EditProfileManagedBean implements Serializable
             profile = (Profile) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentProfile");
             DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
             birthdate = formatter.parse(profile.getBirthdate());
-            avatarImg=new DefaultStreamedContent();
-            avatarFile=new DefaultUploadedFile();
+            ByteArrayInputStream byteArray = new ByteArrayInputStream(profile.getAvatar());
+            avatarImg = new DefaultStreamedContent(byteArray, "image/png");
+            avatarFile = new DefaultUploadedFile();
         }
         catch (ParseException ex)
         {
@@ -165,10 +166,10 @@ public class EditProfileManagedBean implements Serializable
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Success", "Your profile is updated."));
         }
     }
-    
+
     public void saveLookingFor()
     {
-        if(profile.getLookingFor().equals(""))
+        if (profile.getLookingFor().equals(""))
         {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cannot be empty", "Please fill in the looking for."));
         }
@@ -178,10 +179,10 @@ public class EditProfileManagedBean implements Serializable
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Success", "Your profile is updated."));
         }
     }
-    
+
     public void saveAbout()
     {
-        if(profile.getAbout().equals(""))
+        if (profile.getAbout().equals(""))
         {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cannot be empty", "Please fill in the about me."));
         }
@@ -191,11 +192,13 @@ public class EditProfileManagedBean implements Serializable
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Success", "Your profile is updated."));
         }
     }
-    
+
     public void uploadAvatar(FileUploadEvent event)
     {
-        ByteArrayInputStream byteArray=new ByteArrayInputStream(avatarFile.getContents());
-        avatarImg=new DefaultStreamedContent(byteArray,"image/png");
+        ByteArrayInputStream byteArray = new ByteArrayInputStream(event.getFile().getContents());
+        avatarImg = new DefaultStreamedContent(byteArray, "image/png");
+        profile.setAvatar(event.getFile().getContents());
+        profileFacade.edit(profile);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Success", "Your profile is updated."));
     }
 

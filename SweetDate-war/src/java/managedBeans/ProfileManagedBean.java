@@ -7,12 +7,15 @@ package managedBeans;
 
 import beans.ProfileFacadeLocal;
 import entities.Profile;
+import java.io.ByteArrayInputStream;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 @Named(value = "profileManagedBean")
 @SessionScoped
@@ -24,6 +27,7 @@ public class ProfileManagedBean implements Serializable
     private Profile profile;
     private String username;
     private boolean isOwner;
+    private StreamedContent avatarImg;
 
     public ProfileManagedBean()
     {
@@ -39,6 +43,8 @@ public class ProfileManagedBean implements Serializable
         {
             profile = profileFacade.find(username);
         }
+        ByteArrayInputStream byteArray = new ByteArrayInputStream(profile.getAvatar());
+        avatarImg = new DefaultStreamedContent(byteArray, "image/png");
     }
 
     public Profile getProfile()
@@ -68,16 +74,16 @@ public class ProfileManagedBean implements Serializable
         {
             if (username.equals(p.getUsername()))
             {
-                isOwner=true;
+                isOwner = true;
             }
             else
             {
-                isOwner=false;
+                isOwner = false;
             }
         }
         else
         {
-            isOwner=false;
+            isOwner = false;
         }
         return isOwner;
     }
@@ -85,5 +91,15 @@ public class ProfileManagedBean implements Serializable
     public void setIsOwner(boolean isOwner)
     {
         this.isOwner = isOwner;
+    }
+
+    public StreamedContent getAvatarImg()
+    {
+        return avatarImg;
+    }
+
+    public void setAvatarImg(StreamedContent avatarImg)
+    {
+        this.avatarImg = avatarImg;
     }
 }

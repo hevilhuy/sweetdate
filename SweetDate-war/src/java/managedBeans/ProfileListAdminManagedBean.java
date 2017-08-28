@@ -27,26 +27,44 @@ public class ProfileListAdminManagedBean implements Serializable
     private ProfileFacadeLocal profileFacade;
     private ArrayList<Profile> profileList;
     private ArrayList<Profile> selected;
-    
+
     public ProfileListAdminManagedBean()
     {
     }
-    
+
     @PostConstruct
     public void init()
     {
-        profileList=new ArrayList<>(profileFacade.findAll());
-        selected=new ArrayList<>();
+        profileList = new ArrayList<>(profileFacade.findAll());
+        selected = new ArrayList<>();
     }
-    
+
     public void onSelect(String indexes)
     {
-        
+        System.out.println("PROFILE ONSELECT " + indexes);
+        try
+        {
+            Profile profile=profileList.get(Integer.parseInt(indexes));
+            selected.add(profile);
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
-    
+
     public void onDeselect(String indexes)
     {
-        
+        System.out.println("PROFILE ONSELECT " + indexes);
+        try
+        {
+            Profile profile=profileList.get(Integer.parseInt(indexes));
+            selected.remove(profile);
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 
     public ArrayList<Profile> getProfileList()
@@ -68,5 +86,29 @@ public class ProfileListAdminManagedBean implements Serializable
     {
         this.selected = selected;
     }
-    
+
+    public String getStatus(short num)
+    {
+        return num == 0 ? "Deactive" : "Active";
+    }
+
+    public void active()
+    {
+        for (Profile profile : selected)
+        {
+            profile.setActive(Short.parseShort(1 + ""));
+            profileFacade.edit(profile);
+        }
+        selected = new ArrayList<>();
+    }
+
+    public void deactive()
+    {
+        for (Profile profile : selected)
+        {
+            profile.setActive(Short.parseShort(0 + ""));
+            profileFacade.edit(profile);
+        }
+        selected = new ArrayList<>();
+    }
 }

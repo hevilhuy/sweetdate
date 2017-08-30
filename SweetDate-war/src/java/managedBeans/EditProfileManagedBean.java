@@ -60,9 +60,19 @@ public class EditProfileManagedBean implements Serializable
         {
             profile = (Profile) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentProfile");
             DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
-            birthdate = formatter.parse(profile.getBirthdate());
-            ByteArrayInputStream byteArray = new ByteArrayInputStream(profile.getAvatar());
-            avatarImg = new DefaultStreamedContent(byteArray, "image/png");
+            if (profile.getBirthdate() != null)
+            {
+                birthdate = formatter.parse(profile.getBirthdate());
+            }
+            if (profile.getAvatar() != null)
+            {
+                ByteArrayInputStream byteArray = new ByteArrayInputStream(profile.getAvatar());
+                avatarImg = new DefaultStreamedContent(byteArray, "image/png");
+            }
+            else
+            {
+                avatarImg = new DefaultStreamedContent();
+            }
             avatarFile = new DefaultUploadedFile();
         }
         catch (ParseException ex)

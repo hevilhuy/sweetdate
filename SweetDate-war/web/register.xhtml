@@ -13,7 +13,7 @@
         <ui:composition template="template/master_layout.xhtml">
             <ui:define name="content">
                 <b:form>
-                    
+                    <p:growl id="regmsg" showDetail="true" life="2000"></p:growl>
                         <b:row>
                             <b:column>
                                 <p:outputLabel style="color:red;">#{registerManagedBean.errors}</p:outputLabel>
@@ -50,21 +50,29 @@
                         </b:row>
                         <b:row>
                             <b:column medium-screen="4" style="text-align: right;">
-                                <p:outputLabel style="text-align: right;">Re-enter password:</p:outputLabel>
+                                <p:outputLabel>Re-enter password:</p:outputLabel>
                             </b:column>
                             <b:column medium-screen="6">
                                 <b:inputSecret value="#{registerManagedBean.rePassword}"></b:inputSecret>
                             </b:column>
                         </b:row>
+                    <b:row>
+                        <b:column medium-screen="4" style="text-align: right;">
+                            <p:outputLabel>Payment Method: </p:outputLabel>
+                        </b:column>
+                        <b:column medium-screen="6">
+                            <b:radiobutton value="#{registerManagedBean.payMethod}" itemLabel="Monthly 50$" itemValue="month"></b:radiobutton>
+                            <b:radiobutton value="#{registerManagedBean.payMethod}" itemLabel="Yearly 500$" itemValue="year"></b:radiobutton>
+                        </b:column>
+                    </b:row>
                         <b:row>
                             <b:column offset="5" span="1">
-                                <b:commandButton action="#{registerManagedBean.register()}" value="Submit" look="success"></b:commandButton>
+                                <b:commandButton update="regmsg" actionListener="#{registerManagedBean.register()}" value="Submit" look="success"></b:commandButton>
                             </b:column>
                             <b:column span="1">
                                 <b:commandButton value="Reset" type="reset" look="danger"></b:commandButton>
                             </b:column>
-                        </b:row>                
-                    
+                        </b:row>
                 </b:form>
             </ui:define>
         </ui:composition>

@@ -43,8 +43,11 @@ public class ProfileManagedBean implements Serializable
         {
             profile = profileFacade.find(username);
         }
-        ByteArrayInputStream byteArray = new ByteArrayInputStream(profile.getAvatar());
-        avatarImg = new DefaultStreamedContent(byteArray, "image/png");
+        if (profile.getAvatar() != null)
+        {
+            ByteArrayInputStream byteArray = new ByteArrayInputStream(profile.getAvatar());
+            avatarImg = new DefaultStreamedContent(byteArray, "image/png");
+        }
     }
 
     public Profile getProfile()

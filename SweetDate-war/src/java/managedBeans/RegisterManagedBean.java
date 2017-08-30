@@ -5,16 +5,22 @@
  */
 package managedBeans;
 
+import beans.AddressCompletor;
 import beans.PasswordManager;
 import beans.ProfileFacadeLocal;
 import entities.Profile;
 import entities.Role;
+import java.io.IOException;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.security.MessageDigest;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -29,7 +35,7 @@ public class RegisterManagedBean implements Serializable
     private ProfileFacadeLocal profileFacade;
     private String rePassword;
     private Profile profile;
-    private String errors;
+    private String payMethod;
 
     public RegisterManagedBean()
     {
@@ -56,47 +62,61 @@ public class RegisterManagedBean implements Serializable
         this.profile = profile;
     }
 
-    public String register()
+    public void register()
     {
         Profile profileInDb = profileFacade.find(profile.getUsername());
-        errors="";
         if (!profile.getPassword().equals(rePassword))
         {
-            errors += "The password does not match!";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Failed", "The password does not match!"));
         }
         else if (profileInDb != null)
         {
-            errors += "This username has already existed!";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Failed", "This username has already existed!"));
         }
         else if (profile.getDisplayName().equals(""))
         {
-            errors += "Please fill in the display name!";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Failed", "Display name is empty!"));
         }
         else if(profile.getPassword().length()<4)
         {
-            errors+="Password must more than 4 characters!";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Failed", "Password must have more than 4 characters!"));
         }
         else if(profile.getPassword().length()>12)
         {
-            errors+="Password must less than 12 characters";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Failed", "Password must have less than 12 characters!"));
+        }
+        else if(payMethod.equals(""))
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Failed", "Please specify the payment method"));
         }
         else
         {
             profile.setActive(Short.parseShort(0 + ""));
             profile.setRoleId(new Role(2));
             profile.setPassword(PasswordManager.getMD5Hex(profile.getPassword()));
+            if(payMethod.equals("year"))
+            {
+                
+            }
             profileFacade.create(profile);
+            try
+            {
+                FacesContext.getCurrentInstance().getExternalContext().redirect(AddressCompletor.complete("index.xhtml"));
+            }
+            catch (IOException ex)
+            {
+                Logger.getLogger(RegisterManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        return errors.equals("")?"profile":"register";
     }
 
-    public String getErrors()
+    public String getPayMethod()
     {
-        return errors;
+        return payMethod;
     }
 
-    public void setErrors(String errors)
+    public void setPayMethod(String payMethod)
     {
-        this.errors = errors;
+        this.payMethod = payMethod;
     }
 }

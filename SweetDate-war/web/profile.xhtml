@@ -21,7 +21,8 @@
                 <p:outputLabel style="font-weight: lighter;">#{profileManagedBean.profile.country}</p:outputLabel>
                 <b:row>
                     <b:column span="4">
-                        <p:graphicImage id="showAvatar" class="col-md-12" value="#{profileManagedBean.avatarImg}"></p:graphicImage>
+                        <p:graphicImage class="col-md-12" rendered="#{profileManagedBean.profile.avatar==null?true:fasle}" value="/img/default_avatar.jpg"></p:graphicImage>
+                        <p:graphicImage class="col-md-12" rendered="#{profileManagedBean.profile.avatar==null?fasle:true}" value="#{profileManagedBean.avatarImg}"></p:graphicImage>
                     </b:column>
                     <b:column span="6">
                         <b:tabView active-index="1" pills="true" contentStyle="border: 1px solid #ddd;padding:10px">
@@ -47,7 +48,7 @@
                                     </b:column>
                                 </b:row>
                             </b:tab>
-                            <b:tab title="About me">
+                            <b:tab title="About Me &amp; Contact">
                                 <p:outputLabel>#{profileManagedBean.profile.about}</p:outputLabel>
                             </b:tab>
                         </b:tabView>

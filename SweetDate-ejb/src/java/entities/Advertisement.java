@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Advertisement.findByMinAge", query = "SELECT a FROM Advertisement a WHERE a.minAge = :minAge")
     , @NamedQuery(name = "Advertisement.findByMaxAge", query = "SELECT a FROM Advertisement a WHERE a.maxAge = :maxAge")
     , @NamedQuery(name = "Advertisement.findByDisplay", query = "SELECT a FROM Advertisement a WHERE a.display = :display")
+    , @NamedQuery(name = "Advertisement.findByDescription", query = "SELECT a FROM Advertisement a WHERE a.description = :description")
 })
 public class Advertisement implements Serializable
 {
@@ -84,6 +85,11 @@ public class Advertisement implements Serializable
     @NotNull
     @Column(name = "Display")
     private short display;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 1073741823)
+    @Column(name = "Description")
+    private String description;
 
     public Advertisement()
     {
@@ -94,7 +100,7 @@ public class Advertisement implements Serializable
         this.adId = adId;
     }
 
-    public Advertisement(Integer adId, byte[] image, String link, String dueDate, int price, int position, int minAge, int maxAge, short display)
+    public Advertisement(Integer adId, byte[] image, String link, String dueDate, int price, int position, int minAge, int maxAge, short display, String description)
     {
         this.adId = adId;
         this.image = image;
@@ -105,6 +111,7 @@ public class Advertisement implements Serializable
         this.minAge = minAge;
         this.maxAge = maxAge;
         this.display = display;
+        this.description = description;
     }
 
     public Integer getAdId()
@@ -195,6 +202,16 @@ public class Advertisement implements Serializable
     public void setDisplay(short display)
     {
         this.display = display;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
     }
 
     @Override

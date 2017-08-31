@@ -14,6 +14,8 @@ import java.io.IOException;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.security.MessageDigest;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -73,19 +75,31 @@ public class RegisterManagedBean implements Serializable
         {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Failed", "This username has already existed!"));
         }
+        else if (profile.getUsername().contains(" "))
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Failed", "This username must not have blank!"));
+        }
+        else if (profile.getEmail().equals(""))
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Failed", "Email is must not be empty!"));
+        }
+        else if (!isValidEmailAddress(profile.getEmail()))
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Failed", "This email is not valid!"));
+        }
         else if (profile.getDisplayName().equals(""))
         {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Failed", "Display name is empty!"));
         }
-        else if(profile.getPassword().length()<4)
+        else if (profile.getPassword().length() < 4)
         {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Failed", "Password must have more than 4 characters!"));
         }
-        else if(profile.getPassword().length()>12)
+        else if (profile.getPassword().length() > 12)
         {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Failed", "Password must have less than 12 characters!"));
         }
-        else if(payMethod.equals(""))
+        else if (payMethod.equals(""))
         {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Failed", "Please specify the payment method"));
         }
@@ -94,14 +108,33 @@ public class RegisterManagedBean implements Serializable
             profile.setActive(Short.parseShort(0 + ""));
             profile.setRoleId(new Role(2));
             profile.setPassword(PasswordManager.getMD5Hex(profile.getPassword()));
-            if(payMethod.equals("year"))
+            Date today = new Date();
+            Calendar c = Calendar.getInstance();
+            if (payMethod.equals("year"))
             {
-                
+                c.setTime(today);
+                c.add(Calendar.YEAR, 1);
+                today = c.getTime();
+                String year = (today.getYear() + 1900) + "";
+                String month = (today.getMonth() + 1) + "";
+                String date = (today.getDate()) + "";
+                profile.setDueDate(year + "-" + month + "-" + date);
+            }
+            if (payMethod.equals("month"))
+            {
+                c.setTime(today);
+                c.add(Calendar.MONTH, 1);
+                today = c.getTime();
+                String year = (today.getYear() + 1900) + "";
+                String month = (today.getMonth() + 1) + "";
+                String date = (today.getDate()) + "";
+                profile.setDueDate(year + "-" + month + "-" + date);
             }
             profileFacade.create(profile);
             try
             {
-                FacesContext.getCurrentInstance().getExternalContext().redirect(AddressCompletor.complete("index.xhtml"));
+                //FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + AddressCompletor.complete("index"));
+                FacesContext.getCurrentInstance().getExternalContext().redirect(AddressCompletor.complete("register_success.xhtml"));
             }
             catch (IOException ex)
             {
@@ -118,5 +151,13 @@ public class RegisterManagedBean implements Serializable
     public void setPayMethod(String payMethod)
     {
         this.payMethod = payMethod;
+    }
+
+    private boolean isValidEmailAddress(String email)
+    {
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
     }
 }

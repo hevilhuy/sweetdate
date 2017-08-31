@@ -12,13 +12,12 @@
     <h:body>
         <ui:composition template="template/master_layout.xhtml">
             <ui:define name="content">
-                <b:form>
-                    <p:growl id="regmsg" showDetail="true" life="2000"></p:growl>
-                        <b:row>
-                            <b:column>
-                                <p:outputLabel style="color:red;">#{registerManagedBean.errors}</p:outputLabel>
-                            </b:column>
-                        </b:row>
+                <ui:fragment rendered="#{loginManagedBean.isLogin}">
+                    <p:outputLabel>You already logged in.</p:outputLabel>
+                </ui:fragment>
+                <ui:fragment rendered="#{!loginManagedBean.isLogin}">
+                    <b:form>
+                        <p:growl id="regmsg" showDetail="true" life="2000"></p:growl>
                         <b:row>
                             <b:column medium-screen="4" style="text-align: right;">
                                 <p:outputLabel style="text-align: right;">Display name: </p:outputLabel>
@@ -56,15 +55,23 @@
                                 <b:inputSecret value="#{registerManagedBean.rePassword}"></b:inputSecret>
                             </b:column>
                         </b:row>
-                    <b:row>
-                        <b:column medium-screen="4" style="text-align: right;">
-                            <p:outputLabel>Payment Method: </p:outputLabel>
-                        </b:column>
-                        <b:column medium-screen="6">
-                            <b:radiobutton value="#{registerManagedBean.payMethod}" itemLabel="Monthly 50$" itemValue="month"></b:radiobutton>
-                            <b:radiobutton value="#{registerManagedBean.payMethod}" itemLabel="Yearly 500$" itemValue="year"></b:radiobutton>
-                        </b:column>
-                    </b:row>
+                        <b:row>
+                            <b:column medium-screen="4" style="text-align: right;">
+                                <p:outputLabel>Email:</p:outputLabel>
+                            </b:column>
+                            <b:column medium-screen="6">
+                                <b:inputText value="#{registerManagedBean.profile.email}"></b:inputText>
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column medium-screen="4" style="text-align: right;">
+                                <p:outputLabel>Payment Method: </p:outputLabel>
+                            </b:column>
+                            <b:column medium-screen="6">
+                                <b:radiobutton value="#{registerManagedBean.payMethod}" itemLabel="Monthly 50$" itemValue="month"></b:radiobutton>
+                                <b:radiobutton value="#{registerManagedBean.payMethod}" itemLabel="Yearly 500$" itemValue="year"></b:radiobutton>
+                            </b:column>
+                        </b:row>
                         <b:row>
                             <b:column offset="5" span="1">
                                 <b:commandButton update="regmsg" actionListener="#{registerManagedBean.register()}" value="Submit" look="success"></b:commandButton>
@@ -73,7 +80,8 @@
                                 <b:commandButton value="Reset" type="reset" look="danger"></b:commandButton>
                             </b:column>
                         </b:row>
-                </b:form>
+                    </b:form>
+                </ui:fragment>
             </ui:define>
         </ui:composition>
     </h:body>

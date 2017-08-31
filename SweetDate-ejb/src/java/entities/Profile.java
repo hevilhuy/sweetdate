@@ -44,6 +44,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Profile.findByGender", query = "SELECT p FROM Profile p WHERE p.gender = :gender")
     , @NamedQuery(name = "Profile.findByBirthdate", query = "SELECT p FROM Profile p WHERE p.birthdate = :birthdate")
     , @NamedQuery(name = "Profile.findByLookingFor", query = "SELECT p FROM Profile p WHERE p.lookingFor = :lookingFor")
+    , @NamedQuery(name = "Profile.findByDueDate", query = "SELECT p FROM Profile p WHERE p.dueDate = :dueDate")
+    , @NamedQuery(name = "Profile.findByEmail", query = "SELECT p FROM Profile p WHERE p.email = :email")
+    , @NamedQuery(name = "Profile.findByContact", query = "SELECT p FROM Profile p WHERE p.contact = :contact")
+    , @NamedQuery(name = "Profile.findByMaritalStatus", query = "SELECT p FROM Profile p WHERE p.maritalStatus = :maritalStatus")
+    , @NamedQuery(name = "Profile.findByCaste", query = "SELECT p FROM Profile p WHERE p.caste = :caste")
 })
 public class Profile implements Serializable
 {
@@ -86,6 +91,24 @@ public class Profile implements Serializable
     @Size(max = 1073741823)
     @Column(name = "LookingFor")
     private String lookingFor;
+    @Size(max = 10)
+    @Column(name = "DueDate")
+    private String dueDate;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "Email")
+    private String email;
+    @Size(max = 1073741823)
+    @Column(name = "Contact")
+    private String contact;
+    @Size(max = 50)
+    @Column(name = "MaritalStatus")
+    private String maritalStatus;
+    @Size(max = 50)
+    @Column(name = "Caste")
+    private String caste;
     @ManyToMany(mappedBy = "profileCollection")
     private Collection<Event> eventCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
@@ -109,12 +132,13 @@ public class Profile implements Serializable
         this.username = username;
     }
 
-    public Profile(String username, String password, short active, String displayName)
+    public Profile(String username, String password, short active, String displayName, String email)
     {
         this.username = username;
         this.password = password;
         this.active = active;
         this.displayName = displayName;
+        this.email = email;
     }
 
     public String getUsername()
@@ -215,6 +239,56 @@ public class Profile implements Serializable
     public void setLookingFor(String lookingFor)
     {
         this.lookingFor = lookingFor;
+    }
+
+    public String getDueDate()
+    {
+        return dueDate;
+    }
+
+    public void setDueDate(String dueDate)
+    {
+        this.dueDate = dueDate;
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
+    public String getContact()
+    {
+        return contact;
+    }
+
+    public void setContact(String contact)
+    {
+        this.contact = contact;
+    }
+
+    public String getMaritalStatus()
+    {
+        return maritalStatus;
+    }
+
+    public void setMaritalStatus(String maritalStatus)
+    {
+        this.maritalStatus = maritalStatus;
+    }
+
+    public String getCaste()
+    {
+        return caste;
+    }
+
+    public void setCaste(String caste)
+    {
+        this.caste = caste;
     }
 
     @XmlTransient

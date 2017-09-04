@@ -4,15 +4,15 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
         <ui:composition template="template/master_layout.xhtml">
             <ui:define name="content">
-<!--                <ui:fragment rendered="#{loginManagedBean.isLogin}">-->
-                <ui:fragment rendered="true">
+                <ui:fragment rendered="#{loginManagedBean.isLogin}">
                     <b:form enctype="multipart/form-data">
                         <b:tabView activeIndex="1">
                             <b:tab title="Change Password">
@@ -75,6 +75,32 @@
                                 </b:row>
                                 <b:row>
                                     <b:column medium-screen="6" style="text-align: right">
+                                        <p:outputLabel>Marital status:</p:outputLabel>
+                                    </b:column>
+                                    <b:column medium-screen="6">
+                                        <b:selectOneMenu value="#{editProfileManagedBean.profile.maritalStatus}">
+                                            <f:selectItem itemLabel="Please select" itemValue=""></f:selectItem>
+                                            <f:selectItem itemLabel="Never Married" itemValue="Never Married"></f:selectItem>
+                                            <f:selectItem itemLabel="Divorced" itemValue="Divorced"></f:selectItem>
+                                            <f:selectItem itemLabel="Widowed" itemValue="Widowed"></f:selectItem>
+                                        </b:selectOneMenu>
+                                    </b:column>
+                                </b:row>
+                                <b:row>
+                                    <b:column medium-screen="6" style="text-align: right">
+                                        <p:outputLabel>Caste:</p:outputLabel>
+                                    </b:column>
+                                    <b:column medium-screen="6">
+                                        <b:selectOneMenu value="#{editProfileManagedBean.profile.caste}">
+                                            <f:selectItem itemLabel="Please select" itemValue=""></f:selectItem>
+                                            <f:selectItem itemLabel="Varna" itemValue="Varna"></f:selectItem>
+                                            <f:selectItem itemLabel="Jati" itemValue="Jati"></f:selectItem>
+                                            <f:selectItem itemLabel="None (For non Indian)" itemValue="None"></f:selectItem>
+                                        </b:selectOneMenu>
+                                    </b:column>
+                                </b:row>
+                                <b:row>
+                                    <b:column medium-screen="6" style="text-align: right">
                                         <p:outputLabel>Birthdate:</p:outputLabel>
                                     </b:column>
                                     <b:column medium-screen="6">
@@ -104,9 +130,13 @@
                             </b:tab>
                             <b:tab title="About Me &amp; Contact">
                                 <b:row>
-                                    <b:column>Describe your personalities and how do they contact you:</b:column>
+                                    <b:column>Describe your personalities:</b:column>
                                     <b:column>
                                         <b:inputTextarea value="#{editProfileManagedBean.profile.about}"></b:inputTextarea>
+                                    </b:column>
+                                    <b:column>How to contact you?</b:column>
+                                    <b:column>
+                                        <b:inputTextarea value="#{editProfileManagedBean.profile.contact}"></b:inputTextarea>
                                     </b:column>
                                 </b:row>
                                 <b:row>
@@ -116,25 +146,42 @@
                                     </b:column>
                                 </b:row>
                             </b:tab>
+                            <b:tab title="Email">
+                                <b:row>
+                                    <b:column>
+                                        <p:outputLabel>Your current email: #{editProfileManagedBean.profile.email}</p:outputLabel>
+                                    </b:column>
+                                </b:row>
+                                <b:row>
+                                    <b:column>
+                                        <p:outputLabel>Enter your new email: </p:outputLabel>
+                                    </b:column>
+                                    <b:column>
+                                        <b:inputText value="#{editProfileManagedBean.profile.email}"></b:inputText>
+                                    </b:column>
+                                </b:row>
+                                <b:row>
+                                    <b:column style="text-align: center;">
+                                        <p:growl id="emailmsg" showDetail="true" life="2000"/>
+                                        <b:commandButton actionListener="#{editProfileManagedBean.saveEmail()}" update="emailmsg" value="Save Changes" look="success"></b:commandButton>
+                                    </b:column>
+                                </b:row>
+                            </b:tab>
                             <b:tab title="Avatar">
                                 <b:row>
-                                    <b:column medium-screen="6">
-                                        <p:outputLabel>Your current avatar: </p:outputLabel>
-                                        <p:graphicImage id="showAvatar" class="col-md-12" value="#{editProfileManagedBean.avatarImg}"></p:graphicImage>
-                                    </b:column>
-                                    <b:column medium-screen="6">
+                                    <b:column>
                                         <p:growl id="avatarmsg" showDetail="true" life="2000"/>
                                         <p:fileUpload class="col-md-12" fileUploadListener="#{editProfileManagedBean.uploadAvatar}" dragDropSupport="false"
-                                                      update="avatarmsg showAvatar" sizeLimit="10485760" fileLimit="1" allowTypes="/(\.|\/)(jpe?g|png)$/" />
+                                                      update="avatarmsg" sizeLimit="10485760" fileLimit="1" allowTypes="/(\.|\/)(jpe?g|png)$/" />
                                     </b:column>
                                 </b:row>
                             </b:tab>
                         </b:tabView>
                     </b:form>
                 </ui:fragment>
-<!--                <ui:fragment rendered="#{!loginManagedBean.isLogin}">
-    <p:outputLabel>You don't have permission.</p:outputLabel>
-</ui:fragment>-->
+                <ui:fragment rendered="#{!loginManagedBean.isLogin}">
+                    <p:outputLabel>You don't have permission.</p:outputLabel>
+                </ui:fragment>
             </ui:define>
         </ui:composition>
     </h:body>

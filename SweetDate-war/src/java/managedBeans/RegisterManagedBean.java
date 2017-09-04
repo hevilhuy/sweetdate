@@ -6,6 +6,7 @@
 package managedBeans;
 
 import beans.AddressCompletor;
+import beans.EmailValidator;
 import beans.PasswordManager;
 import beans.ProfileFacadeLocal;
 import entities.Profile;
@@ -83,7 +84,7 @@ public class RegisterManagedBean implements Serializable
         {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Failed", "Email is must not be empty!"));
         }
-        else if (!isValidEmailAddress(profile.getEmail()))
+        else if (!EmailValidator.validate(profile.getEmail()))
         {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Failed", "This email is not valid!"));
         }
@@ -151,13 +152,5 @@ public class RegisterManagedBean implements Serializable
     public void setPayMethod(String payMethod)
     {
         this.payMethod = payMethod;
-    }
-
-    private boolean isValidEmailAddress(String email)
-    {
-        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
-        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
-        java.util.regex.Matcher m = p.matcher(email);
-        return m.matches();
     }
 }

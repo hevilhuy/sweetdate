@@ -20,36 +20,99 @@
                 <hr style="margin: 0px"/>
                 <p:outputLabel style="font-weight: lighter;">#{profileManagedBean.profile.country}</p:outputLabel>
                 <b:row>
-                    <b:column span="4">
-                        <p:graphicImage class="col-md-12" rendered="#{profileManagedBean.profile.avatar==null?true:fasle}" value="/img/default_avatar.jpg"></p:graphicImage>
-                        <p:graphicImage class="col-md-12" rendered="#{profileManagedBean.profile.avatar==null?fasle:true}" value="#{profileManagedBean.avatarImg}"></p:graphicImage>
+                    <b:column medium-screen="4">
+                        <p:graphicImage style="border-radius: 150px" class="col-md-12" rendered="#{profileManagedBean.profile.avatar==null?true:fasle}" value="/img/default_avatar.jpg"></p:graphicImage>
+                        <p:graphicImage style="border-radius: 150px" class="col-md-12" rendered="#{profileManagedBean.profile.avatar==null?fasle:true}" value="#{profileManagedBean.avatarImg}"></p:graphicImage>
+                        <b:row id="followStatus" rendered="#{!profileManagedBean.isOwner}">
+                            <b:form>
+                                <ui:fragment rendered="#{profileManagedBean.isSentRequest}">
+                                    <b:column style="text-align: center;margin-top: 15px">
+                                        <b:commandButton actionListener="#{profileManagedBean.unfollow()}" update="seeContact followStatus" value="Unfollow" look="danger"></b:commandButton>
+                                    </b:column>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{!profileManagedBean.isSentRequest}">
+                                    <b:column style="text-align: center;margin-top: 15px">
+                                        <b:commandButton actionListener="#{profileManagedBean.follow()}" update="seeContact followStatus" value="Follow" look="info"></b:commandButton>
+                                    </b:column>
+                                </ui:fragment>
+                            </b:form>
+                        </b:row>
                     </b:column>
-                    <b:column span="6">
+                    <b:column span="8">
                         <b:tabView active-index="1" pills="true" contentStyle="border: 1px solid #ddd;padding:10px">
                             <b:tab title="Looking for">
                                 <p:outputLabel style="font-weight: lighter;">#{profileManagedBean.profile.lookingFor}</p:outputLabel>
                             </b:tab>
                             <b:tab title="My Informations">
                                 <b:row>
-                                    <b:column span="2">
+                                    <b:column>
                                         <p:outputLabel>Birthdate: </p:outputLabel>
                                     </b:column>
-                                    <b:column span="4">
-                                        <p:outputLabel style="font-weight: lighter;">#{profileManagedBean.profile.birthdate}</p:outputLabel>
+                                    <b:column>
+                                        <p:outputLabel style="font-weight: lighter;margin-left: 30px;">#{profileManagedBean.profile.birthdate}</p:outputLabel>
                                     </b:column>
                                 </b:row>
                                 <b:row>
-                                    <b:column span="2">
+                                    <b:column>
                                         <p:outputLabel>Gender: </p:outputLabel>
                                     </b:column>
-                                    <b:column span="4">
-                                        <b:image rendered="#{profileManagedBean.profile.gender==0}" tooltip="Female" width="15px" height="15px" value="/img/female.png"></b:image>
-                                        <b:image rendered="#{profileManagedBean.profile.gender==1}" tooltip="Male" width="15px" height="15px" value="/img/male.png"></b:image>
+                                    <b:column>
+                                        <b:image style="margin-left: 30px;margin-bottom: 3px;" rendered="#{profileManagedBean.profile.gender==0}" tooltip="Female" width="15px" height="15px" value="/img/female.png"></b:image>
+                                        <b:image style="margin-left: 30px;margin-bottom: 3px;" rendered="#{profileManagedBean.profile.gender==1}" tooltip="Male" width="15px" height="15px" value="/img/male.png"></b:image>
+                                    </b:column>
+                                </b:row>
+                                <b:row>
+                                    <b:column>
+                                        <p:outputLabel>Marital status: </p:outputLabel>
+                                    </b:column>
+                                    <b:column>
+                                        <p:outputLabel style="font-weight: lighter;margin-left: 30px;">#{profileManagedBean.profile.maritalStatus}</p:outputLabel>
+                                    </b:column>
+                                </b:row>
+                                <b:row>
+                                    <b:column>
+                                        <p:outputLabel>Caste: </p:outputLabel>
+                                    </b:column>
+                                    <b:column>
+                                        <p:outputLabel style="font-weight: lighter;margin-left: 30px;">#{profileManagedBean.profile.caste}</p:outputLabel>
                                     </b:column>
                                 </b:row>
                             </b:tab>
-                            <b:tab title="About Me &amp; Contact">
-                                <p:outputLabel>#{profileManagedBean.profile.about}</p:outputLabel>
+                            <b:tab title="About Me">
+                                <b:row>
+                                    <b:column>
+                                        <p:outputLabel style="font-weight: lighter;">#{profileManagedBean.profile.about}</p:outputLabel>
+                                    </b:column>
+                                </b:row>
+                            </b:tab>
+                            <b:tab title="Contact">
+                                <b:row>
+                                    <b:column>
+                                        <p:outputLabel>Email:</p:outputLabel>
+                                    </b:column>
+                                    <b:column>
+                                        <p:outputLabel style="font-weight: lighter;margin-left: 30px;">#{profileManagedBean.profile.email}</p:outputLabel>
+                                    </b:column>
+                                </b:row>
+                                <b:row id="seeContact" rendered="#{!profileManagedBean.isOwner}">
+                                    <b:column>
+                                        <p:outputLabel>Contact:</p:outputLabel>
+                                    </b:column>
+                                    <b:column rendered="#{profileManagedBean.canSeeContact}">
+                                        <p:outputLabel style="font-weight: lighter;margin-left: 30px;">#{profileManagedBean.profile.contact}</p:outputLabel>
+                                    </b:column>
+                                    <b:column rendered="#{!profileManagedBean.canSeeContact}">
+                                        <p:outputLabel style="font-weight: lighter;margin-left: 30px;">If you are interest on me please follow me. If I follow you as well then both of us will see the contact.</p:outputLabel>
+                                    </b:column>
+                                </b:row>
+                                <b:row rendered="#{profileManagedBean.isOwner}">
+                                    <b:column>
+                                        <p:outputLabel>Contact:</p:outputLabel>
+                                    </b:column>
+                                    <b:column>
+                                        <p:outputLabel style="font-weight: lighter;margin-left: 30px;">#{profileManagedBean.profile.contact}</p:outputLabel>
+                                    </b:column>
+                                </b:row>
                             </b:tab>
                         </b:tabView>
                     </b:column>

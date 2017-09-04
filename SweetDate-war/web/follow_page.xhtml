@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <f:metadata>
+            <f:viewAction action="#{followManagedBean.init()}"></f:viewAction>
+        </f:metadata>
+        <ui:composition template="template/master_layout.xhtml">
+            <ui:define name="content">
+                <ui:fragment rendered="#{loginManagedBean.isLogin}">
+                    <b:form>
+                        <b:tabView pills="true">
+                            <b:tab>
+                                <f:facet name="anchor">
+                                    <p:outputLabel>Followers</p:outputLabel>
+                                    <b:badge style="margin-left: 5px" value="#{followManagedBean.followerList.size()}"/>
+                                </f:facet>
+                                <b:row>
+                                    <ui:repeat value="#{followManagedBean.followerList}" var="follower" varStatus="i">
+                                        <b:column medium-screen="4">
+                                            <b:thumbnail>
+                                                <b:row>
+                                                    <b:column>
+                                                        <p:graphicImage style="border-radius: 150px" class="col-md-6 col-md-offset-3" rendered="#{follower.followerId.avatar==null?true:fasle}" value="/img/default_avatar.jpg"></p:graphicImage>
+                                                        <p:graphicImage style="border-radius: 150px" class="col-md-6 col-md-offset-3" rendered="#{follower.followerId.avatar==null?fasle:true}" value="#{followManagedBean.getAvatar(follower.followerId)}"></p:graphicImage>
+                                                    </b:column>
+                                                </b:row>
+                                                <b:row>
+                                                    <b:column style="text-align: center;font-family: 'Yesteryear', cursive;font-size: 20px;font-weight: bold">#{follower.followerId.displayName}</b:column>
+                                                </b:row>
+                                                <b:row>
+                                                    <b:column style="text-align: center">
+                                                        <p:outputLabel style="font-weight: lighter;font-size: 12px;font-style: italic;color: #ccc">#{follower.followerId.country}</p:outputLabel>
+                                                    </b:column>
+                                                </b:row>
+                                                <b:row>
+                                                    <b:column style="text-align: justify">
+                                                        <p:outputLabel style="font-weight: normal">#{follower.followerId.about}</p:outputLabel>
+                                                    </b:column>
+                                                </b:row>
+                                                <b:row>
+                                                    <b:column style="text-align: center">
+                                                        <b:commandButton action="#{followManagedBean.viewProfile(follower.followerId)}" value="View Profile" look="info"></b:commandButton>
+                                                    </b:column>
+                                                </b:row>
+                                            </b:thumbnail>
+                                        </b:column>
+                                    </ui:repeat>
+                                </b:row>
+                            </b:tab>
+                            <b:tab>
+                                <f:facet name="anchor">
+                                    <p:outputLabel>Following</p:outputLabel>
+                                    <b:badge style="margin-left: 5px" value="#{followManagedBean.followingList.size()}"/>
+                                </f:facet>
+                                <b:row>
+                                    <ui:repeat value="#{followManagedBean.followingList}" var="following" varStatus="i">
+                                        <b:column medium-screen="4">
+                                            <b:thumbnail>
+                                                <b:row>
+                                                    <b:column>
+                                                        <p:graphicImage style="border-radius: 150px" class="col-md-6 col-md-offset-3" rendered="#{following.username.avatar==null?true:fasle}" value="/img/default_avatar.jpg"></p:graphicImage>
+                                                        <p:graphicImage style="border-radius: 150px" class="col-md-6 col-md-offset-3" rendered="#{following.username.avatar==null?fasle:true}" value="#{followManagedBean.getAvatar(following.username)}"></p:graphicImage>
+                                                    </b:column>
+                                                </b:row>
+                                                <b:row>
+                                                    <b:column style="text-align: center;font-family: 'Yesteryear', cursive;font-size: 20px;font-weight: bold">#{following.username.displayName}</b:column>
+                                                </b:row>
+                                                <b:row>
+                                                    <b:column style="text-align: center">
+                                                        <p:outputLabel style="font-weight: lighter;font-size: 12px;font-style: italic;color: #ccc">#{following.username.country}</p:outputLabel>
+                                                    </b:column>
+                                                </b:row>
+                                                <b:row>
+                                                    <b:column style="text-align: justify">
+                                                        <p:outputLabel style="font-weight: normal">#{following.username.about}</p:outputLabel>
+                                                    </b:column>
+                                                </b:row>
+                                                <b:row>
+                                                    <b:column style="text-align: center">
+                                                        <b:commandButton action="#{followManagedBean.viewProfile(following.username)}" value="View Profile" look="info"></b:commandButton>
+                                                    </b:column>
+                                                </b:row>
+                                            </b:thumbnail>
+                                        </b:column>
+                                    </ui:repeat>
+                                </b:row>
+                            </b:tab>
+                        </b:tabView>
+                    </b:form>
+                </ui:fragment>
+                <ui:fragment rendered="#{!loginManagedBean.isLogin}">
+                    <p:outputLabel>You don't have permission.</p:outputLabel>
+                </ui:fragment>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

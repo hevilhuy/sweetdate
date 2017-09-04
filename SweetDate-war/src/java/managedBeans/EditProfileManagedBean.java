@@ -5,6 +5,7 @@
  */
 package managedBeans;
 
+import beans.EmailValidator;
 import beans.PasswordManager;
 import beans.ProfileFacadeLocal;
 import entities.Profile;
@@ -162,6 +163,14 @@ public class EditProfileManagedBean implements Serializable
         {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Empty field", "You must fill where are you come from."));
         }
+        else if(profile.getMaritalStatus().equals(""))
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Empty field", "Tell us about your marital status!"));
+        }
+        else if(profile.getCaste().equals(""))
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Empty field", "What is your caste?"));
+        }
         else if (age <= 18)
         {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Too young", "You should wait a few years."));
@@ -194,7 +203,28 @@ public class EditProfileManagedBean implements Serializable
     {
         if (profile.getAbout().equals(""))
         {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cannot be empty", "Please fill in the about me."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cannot be empty", "Please say something about you."));
+        }
+        else if (profile.getContact().equals(""))
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cannot be empty", "Please help them to contact you."));
+        }
+        else
+        {
+            profileFacade.edit(profile);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Success", "Your profile is updated."));
+        }
+    }
+
+    public void saveEmail()
+    {
+        if (profile.getEmail().equals(""))
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cannot be empty", "Email cannot be empty!"));
+        }
+        else if (!EmailValidator.validate(profile.getEmail()))
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cannot be empty", "Your email is not valid!"));
         }
         else
         {

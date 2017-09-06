@@ -18,13 +18,19 @@ import java.io.Serializable;
 @SessionScoped
 public class IndexManagedBean implements Serializable
 {
-
+    private int gender;
+    
     public IndexManagedBean()
     {
     }
-    
-    public String goToRegister()
+
+    public int getGender()
     {
-        return AddressCompletor.complete("register");
+        return gender;
+    }
+
+    public void setGender(int gender)
+    {
+        this.gender = gender;
     }
 }

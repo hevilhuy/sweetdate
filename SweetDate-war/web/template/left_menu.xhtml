@@ -15,26 +15,24 @@
     <h:body rendered="#{loginManagedBean.isAdmin}">
         <b:row>
             <b:column>
-                <b:panel look="primary" title="Q&amp;A">
+<!--                <b:panel look="primary" title="Q&amp;A">
                     <b:pillLinks>
                         <b:navLink header="Question &amp; Answer"></b:navLink>
                         <b:navLink icon="plus-sign" outcome="faces/edit_question_admin.xhtml?questionId=new" icon-align="right" span="12" value="Add"></b:navLink>
                         <b:navLink span="12" outcome="faces/question_list_admin.xhtml" icon="list" icon-align="right" value="View All"></b:navLink>
                     </b:pillLinks>
-                </b:panel>
+                </b:panel>-->
                 <b:panel look="primary" title="Profile">
                     <b:pillLinks>
                         <b:navLink header="Profile Management"></b:navLink>
                         <b:navLink outcome="faces/profile_list_admin.xhtml" span="12" icon="list" icon-align="right" value="View All"></b:navLink>
                     </b:pillLinks>
                 </b:panel>
-                <b:panel look="primary" title="Q&amp;A">
+                <b:panel look="primary" title="Advertisement">
                     <b:pillLinks>
                         <b:navLink header="Question &amp; Answer"></b:navLink>
-                        <b:navLink icon="plus-sign" icon-align="right" span="12" value="Add"></b:navLink>
-                        <b:navLink span="12" icon="edit" icon-align="right" value="Edit"></b:navLink>
-                        <b:navLink span="12" icon="remove" icon-align="right" value="Remove"></b:navLink>
-                        <b:navLink span="12" icon="list" icon-align="right" value="View All"></b:navLink>
+                        <b:navLink outcome="faces/edit_ads_admin.xhtml?adId=new" icon="plus-sign" icon-align="right" span="12" value="Add"></b:navLink>
+                        <b:navLink outcome="faces/ads_list_admin.xhtml" span="12" icon="list" icon-align="right" value="View All"></b:navLink>
                     </b:pillLinks>
                 </b:panel>
             </b:column>

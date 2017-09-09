@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="template/master_layout.xhtml">
+            <ui:define name="content">
+                <ui:fragment rendered="#{loginManagedBean.isAdmin}">
+                    <h:form id="initializePageDataForm">
+                        <p:remoteCommand name="initializePageDataCommand" autoRun="true" action="#{adsListManagedBean.init()}"/>
+                    </h:form>
+                    <b:form>
+                        <b:dataTable value="#{adsListManagedBean.adsList}" var="ad"
+                                     onselect="ajax:adsListManagedBean.onSelect(indexes)"
+                                     ondeselect="ajax:adsListManagedBean.onDeselect(indexes)"
+                                     select="true" selectionMode="multiple">
+                            <b:dataTableColumn value="#{ad.description}">
+                                <f:facet name="header">
+                                    <p:outputLabel>Description</p:outputLabel>
+                                </f:facet>
+                            </b:dataTableColumn>
+                            <b:dataTableColumn value="#{ad.link}">
+                                <f:facet name="header">
+                                    <p:outputLabel>Link</p:outputLabel>
+                                </f:facet>
+                            </b:dataTableColumn>
+                            <b:dataTableColumn value="#{ad.dueDate}">
+                                <f:facet name="header">
+                                    <p:outputLabel>Due Date</p:outputLabel>
+                                </f:facet>
+                            </b:dataTableColumn>
+                            <b:dataTableColumn value="#{ad.price}">
+                                <f:facet name="header">
+                                    <p:outputLabel>Price</p:outputLabel>
+                                </f:facet>
+                            </b:dataTableColumn>
+                            <b:dataTableColumn value="#{ad.position}">
+                                <f:facet name="header">
+                                    <p:outputLabel>Position</p:outputLabel>
+                                </f:facet>
+                            </b:dataTableColumn>
+                            <b:dataTableColumn value#{ad.minAge}>
+                                <f:facet name="header">
+                                    <p:outputLabel>Min Age</p:outputLabel>
+                                </f:facet>
+                            </b:dataTableColumn>
+                            <b:dataTableColumn value#{ad.maxAge}>
+                                <f:facet name="header">
+                                    <p:outputLabel>Max Age</p:outputLabel>
+                                </f:facet>
+                            </b:dataTableColumn>
+                            <b:dataTableColumn value="#{ad.display}">
+                                <f:facet name="header">
+                                    <p:outputLabel>Display</p:outputLabel>
+                                </f:facet>
+                            </b:dataTableColumn>
+                        </b:dataTable>
+                    </b:form>
+                </ui:fragment>
+                <ui:fragment rendered="#{!loginManagedBean.isAdmin}">
+                    You don't have permission.
+                </ui:fragment>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

@@ -13,11 +13,11 @@
         <ui:composition template="template/master_layout.xhtml">
             <ui:define name="content">
                 <ui:fragment rendered="#{loginManagedBean.isAdmin}">
-                    <h:form id="initializePageDataForm">
-                        <p:remoteCommand name="initializePageDataCommand" autoRun="true" action="#{adsListManagedBean.init()}"/>
-                    </h:form>
+                    <f:metadata>
+                        <f:viewAction action="#{adsListManagedBean.init()}"></f:viewAction>
+                    </f:metadata>
                     <b:form>
-                        <b:dataTable value="#{adsListManagedBean.adsList}" var="ad"
+                        <b:dataTable id="datatable" value="#{adsListManagedBean.adsList}" var="ad"
                                      onselect="ajax:adsListManagedBean.onSelect(indexes)"
                                      ondeselect="ajax:adsListManagedBean.onDeselect(indexes)"
                                      select="true" selectionMode="multiple">
@@ -26,10 +26,11 @@
                                     <p:outputLabel>Description</p:outputLabel>
                                 </f:facet>
                             </b:dataTableColumn>
-                            <b:dataTableColumn value="#{ad.link}">
+                            <b:dataTableColumn>
                                 <f:facet name="header">
                                     <p:outputLabel>Link</p:outputLabel>
                                 </f:facet>
+                                <a href="#{ad.link}" target="_blank">#{ad.link}</a>
                             </b:dataTableColumn>
                             <b:dataTableColumn value="#{ad.dueDate}">
                                 <f:facet name="header">
@@ -46,22 +47,36 @@
                                     <p:outputLabel>Position</p:outputLabel>
                                 </f:facet>
                             </b:dataTableColumn>
-                            <b:dataTableColumn value#{ad.minAge}>
+                            <b:dataTableColumn value="#{ad.minAge}">
                                 <f:facet name="header">
                                     <p:outputLabel>Min Age</p:outputLabel>
                                 </f:facet>
                             </b:dataTableColumn>
-                            <b:dataTableColumn value#{ad.maxAge}>
+                            <b:dataTableColumn value="#{ad.maxAge}">
                                 <f:facet name="header">
                                     <p:outputLabel>Max Age</p:outputLabel>
                                 </f:facet>
                             </b:dataTableColumn>
-                            <b:dataTableColumn value="#{ad.display}">
+                            <b:dataTableColumn>
                                 <f:facet name="header">
                                     <p:outputLabel>Display</p:outputLabel>
                                 </f:facet>
+                                #{adsListManagedBean.displayTransfer(ad.display)}
+                            </b:dataTableColumn>
+                            <b:dataTableColumn style="text-align: center">
+                                <f:facet name="header">
+                                    <p:outputLabel>Commands</p:outputLabel>
+                                </f:facet>
+                                <b:commandButton value="Edit" action="#{adsListManagedBean.edit(ad.adId)}" look="info"></b:commandButton>
                             </b:dataTableColumn>
                         </b:dataTable>
+                        <p:commandButton update="datatable" actionListener="#{adsListManagedBean.delete()}" value="Delete">
+                            <p:confirm header="Confirmation" message="Are you sure to delete?" icon="ui-icon-alert"></p:confirm>
+                        </p:commandButton>
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
                     </b:form>
                 </ui:fragment>
                 <ui:fragment rendered="#{!loginManagedBean.isAdmin}">

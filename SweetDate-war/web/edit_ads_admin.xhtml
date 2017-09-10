@@ -18,95 +18,97 @@
                         <f:viewAction action="#{editAdAdminManagedBean.init()}"></f:viewAction>
                     </f:metadata>
                     <p:growl id="msg" showDetail="true" life="2000"/>
-                    <b:row>
-                        <b:column>
-                            <p:outputLabel>Description:</p:outputLabel>
-                        </b:column>
-                        <b:column>
-                            <b:inputTextarea value="#{editAdAdminManagedBean.ad.description}"></b:inputTextarea>
-                        </b:column>
-                    </b:row>
-                    <b:row>
-                        <b:column>
-                            <p:outputLabel>Advertisement image:</p:outputLabel>
-                        </b:column>
-                        <b:column>
-                            <p:fileUpload class="col-md-12" fileUploadListener="#{editAdAdminManagedBean.uploadImage}" dragDropSupport="false"
-                                          sizeLimit="10485760" fileLimit="1" allowTypes="/(\.|\/)(jpe?g|png)$/" />
-                        </b:column>
-                    </b:row>
-                    <b:row>
-                        <b:column>
-                            <p:outputLabel>Link:</p:outputLabel>
-                        </b:column>
-                        <b:column>
-                            <b:inputText value="#{editAdAdminManagedBean.ad.link}"></b:inputText>
-                        </b:column>
-                    </b:row>
-                    <b:row>
-                        <b:column>
-                            <p:outputLabel>Due Date:</p:outputLabel>
-                        </b:column>
-                        <b:column>
-                            <b:dateTimePicker value="#{editAdAdminManagedBean.dueDate}" showTime="false" showDate="true"></b:dateTimePicker>
-                        </b:column>
-                    </b:row>
-                    <b:row>
-                        <b:column>
-                            <p:outputLabel>Price:</p:outputLabel>
-                        </b:column>
-                        <b:column>
-                            <b:inputText value="#{editAdAdminManagedBean.price}"></b:inputText>
-                        </b:column>
-                    </b:row>
-                    <b:row>
-                        <b:column>
-                            <p:outputLabel>Position:</p:outputLabel>
-                        </b:column>
-                        <b:column>
-                            <b:selectOneMenu value="#{editAdAdminManagedBean.ad.position}">
-                                <f:selectItem itemLabel="Top (position 1)" itemValue="1"></f:selectItem>
-                                <f:selectItem itemLabel="Middle (position 2)" itemValue="2"></f:selectItem>
-                                <f:selectItem itemLabel="Bottom (position 3)" itemValue="3"></f:selectItem>
-                            </b:selectOneMenu>
-                        </b:column>
-                    </b:row>
-                    <b:row>
-                        <b:column>
-                            <p:outputLabel>Display this ad for user with minimum age:</p:outputLabel>
-                        </b:column>
-                        <b:column>
-                            <b:selectOneMenu value="#{editAdAdminManagedBean.ad.minAge}">
-                                <f:selectItems value="#{editAdAdminManagedBean.ageRange}" var="range" itemLabel="#{range}" itemValue="#{range}"></f:selectItems>
-                            </b:selectOneMenu>
-                        </b:column>
-                    </b:row>
-                    <b:row>
-                        <b:column>
-                            <p:outputLabel>Display this ad for user with maximum age:</p:outputLabel>
-                        </b:column>
-                        <b:column>
-                            <b:selectOneMenu value="#{editAdAdminManagedBean.ad.maxAge}">
-                                <f:selectItems value="#{editAdAdminManagedBean.ageRange}" var="range" itemLabel="#{range}" itemValue="#{range}"></f:selectItems>
-                            </b:selectOneMenu>
-                        </b:column>
-                    </b:row>
-                    <b:row>
-                        <b:column>
-                            <p:outputLabel>Display:</p:outputLabel>
-                        </b:column>
-                        <b:column>
-                            <b:selectOneMenu value="#{editAdAdminManagedBean.ad.display}">
-                                <f:selectItem itemLabel="True" itemValue="1"></f:selectItem>
-                                <f:selectItem itemLabel="False" itemValue="0"></f:selectItem>
-                            </b:selectOneMenu>
-                        </b:column>
-                    </b:row>
-                    <b:row>
-                        <b:column style="text-align: center">
-                            <b:commandButton actionListener="#{editAdAdminManagedBean.saveChanges()}" update="msg" look="success" value="Save Changes"></b:commandButton>
-                        </b:column>
-                    </b:row>
+                    <b:form>
+                        <b:row>
+                            <b:column>
+                                <p:outputLabel>Description:</p:outputLabel>
+                            </b:column>
+                            <b:column>
+                                <b:inputTextarea required="false" value="#{editAdAdminManagedBean.ad.description}"></b:inputTextarea>
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column>
+                                <p:outputLabel>Advertisement image:</p:outputLabel>
+                            </b:column>
+                            <b:column>
+                                <p:fileUpload class="col-md-12" fileUploadListener="#{editAdAdminManagedBean.uploadImage}" dragDropSupport="false"
+                                              sizeLimit="10485760" fileLimit="1" allowTypes="/(\.|\/)(jpe?g|png)$/" />
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column>
+                                <p:outputLabel>Link:</p:outputLabel>
+                            </b:column>
+                            <b:column>
+                                <b:inputText value="#{editAdAdminManagedBean.ad.link}"></b:inputText>
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column>
+                                <p:outputLabel>Due Date:</p:outputLabel>
+                            </b:column>
+                            <b:column>
+                                <b:dateTimePicker value="#{editAdAdminManagedBean.dueDate}" showTime="false" showDate="true"></b:dateTimePicker>
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column>
+                                <p:outputLabel>Price:</p:outputLabel>
+                            </b:column>
+                            <b:column>
+                                <b:inputText value="#{editAdAdminManagedBean.price}"></b:inputText>
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column>
+                                <p:outputLabel>Position:</p:outputLabel>
+                            </b:column>
+                            <b:column>
+                                <b:selectOneMenu value="#{editAdAdminManagedBean.ad.position}">
+                                    <f:selectItem itemLabel="Top (position 1)" itemValue="1"></f:selectItem>
+                                    <f:selectItem itemLabel="Middle (position 2)" itemValue="2"></f:selectItem>
+                                    <f:selectItem itemLabel="Bottom (position 3)" itemValue="3"></f:selectItem>
+                                </b:selectOneMenu>
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column>
+                                <p:outputLabel>Display this ad for user with minimum age:</p:outputLabel>
+                            </b:column>
+                            <b:column>
+                                <b:selectOneMenu value="#{editAdAdminManagedBean.ad.minAge}">
+                                    <f:selectItems value="#{editAdAdminManagedBean.ageRange}" var="range" itemLabel="#{range}" itemValue="#{range}"></f:selectItems>
+                                </b:selectOneMenu>
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column>
+                                <p:outputLabel>Display this ad for user with maximum age:</p:outputLabel>
+                            </b:column>
+                            <b:column>
+                                <b:selectOneMenu value="#{editAdAdminManagedBean.ad.maxAge}">
+                                    <f:selectItems value="#{editAdAdminManagedBean.ageRange}" var="range" itemLabel="#{range}" itemValue="#{range}"></f:selectItems>
+                                </b:selectOneMenu>
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column>
+                                <p:outputLabel>Display:</p:outputLabel>
+                            </b:column>
+                            <b:column>
+                                <b:selectOneMenu value="#{editAdAdminManagedBean.ad.display}">
+                                    <f:selectItem itemLabel="Yes" itemValue="1"></f:selectItem>
+                                    <f:selectItem itemLabel="No" itemValue="0"></f:selectItem>
+                                </b:selectOneMenu>
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column style="text-align: center">
+                                <b:commandButton actionListener="#{editAdAdminManagedBean.saveChanges()}" update="msg" look="success" value="Save Changes"></b:commandButton>
+                            </b:column>
+                        </b:row>
+                    </b:form>
                 </ui:fragment>
                 <ui:fragment rendered="#{!loginManagedBean.isAdmin}">
                     You don't have permission.

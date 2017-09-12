@@ -12,105 +12,119 @@
     </h:head>
     <h:body>
         <ui:composition template="template/master_layout.xhtml">
-            <ui:define name="left_menu"></ui:define>
+            <ui:define name="left_menu">
+                <ui:fragment rendered="#{!loginManagedBean.isLogin}">
+                </ui:fragment>
+
+                <ui:fragment rendered="#{loginManagedBean.isLogin}">
+                    <ui:include src="template/left_menu.xhtml"></ui:include>
+                </ui:fragment>
+            </ui:define>
             <ui:define name="header">
                 <ui:include src="template/header.xhtml"></ui:include>
-                <b:row style="background: url(/SweetDate-war/img/home_background.jpg);background-size:cover;background-repeat: no-repeat;background-position: 50% 60%;color: white;">
-                    <b:column medium-screen="4"></b:column>
-                    <b:column medium-screen="4"></b:column>
-                    <b:column medium-screen="4">
-                        <b:form>
+                <ui:fragment rendered="#{!loginManagedBean.isLogin}">
+                    <b:row style="background: url(/SweetDate-war/img/home_background.jpg);background-size:cover;background-repeat: no-repeat;background-position: 50% 60%;color: white;">
+                        <b:column medium-screen="4"></b:column>
+                        <b:column medium-screen="4"></b:column>
+                        <b:column medium-screen="4">
+                            <b:form>
+                                <b:row>
+                                    <b:column medium-screen="8" style="text-align: right">
+                                        <p:outputLabel style="margin-top: 20px">I am a searching for a: </p:outputLabel>
+                                    </b:column>
+                                    <b:column medium-screen="4">
+                                        <b:radiobutton value="#{indexManagedBean.gender}" itemValue="1" itemLabel="Groom"></b:radiobutton>
+                                        <b:radiobutton value="#{indexManagedBean.gender}" itemValue="0" itemLabel="Bride"></b:radiobutton>
+                                    </b:column>
+                                </b:row>
+                                <b:row>
+                                    <b:column medium-screen="8" style="text-align: right">
+                                        <p:outputLabel style="margin-top: 5px">From age:  </p:outputLabel>
+                                    </b:column>
+                                    <b:column medium-screen="4">
+                                        <b:selectOneMenu>
+                                            <f:selectItem itemLabel="18"></f:selectItem>
+                                            <f:selectItem itemLabel="25"></f:selectItem>
+                                        </b:selectOneMenu>
+                                    </b:column>
+                                </b:row>
+                                <b:row>
+                                    <b:column medium-screen="8" style="text-align: right">
+                                        <p:outputLabel style="margin-top: 5px">To age:  </p:outputLabel>
+                                    </b:column>
+                                    <b:column medium-screen="4">
+                                        <b:selectOneMenu>
+                                            <f:selectItem itemLabel="18"></f:selectItem>
+                                            <f:selectItem itemLabel="25"></f:selectItem>
+                                        </b:selectOneMenu>
+                                    </b:column>
+                                </b:row>
+                                <b:row>
+                                    <b:column medium-screen="8" style="text-align: right">
+                                        <p:outputLabel style="margin-top: 5px">With caste:  </p:outputLabel>
+                                    </b:column>
+                                    <b:column medium-screen="4">
+                                        <b:selectOneMenu>
+                                            <f:selectItem itemLabel="Caste 1"></f:selectItem>
+                                            <f:selectItem itemLabel="Caste 2"></f:selectItem>
+                                            <f:selectItem itemLabel="Any"></f:selectItem>
+                                        </b:selectOneMenu>
+                                    </b:column>
+                                </b:row>
+                                <b:row>
+                                    <b:column style="text-align: center">
+                                        <b:commandButton style="margin-bottom: 20px;" value="Let's Find!" look="success"></b:commandButton>
+                                    </b:column>
+                                </b:row>
+                            </b:form>
+                        </b:column>
+                    </b:row>
+                    <b:row style="background: url(/SweetDate-war/img/register.jpg);background-size:cover;background-repeat: no-repeat;background-position: 50% 50%;color: white;text-align: center;margin-top: 30px;margin-bottom: 30px;height: 200px">
+                        <b:column>
+                            <b:form>
+                                <b:commandButton style="margin-top: 25px;height: 150px;width: 300px;font-size: 60px;font-family: 'Yesteryear', cursive" value="JOIN US" look="info"></b:commandButton>
+                            </b:form>
+                        </b:column>
+                    </b:row>
+                    <b:row style="background: url(/SweetDate-war/img/home_background2.jpg);background-size:cover;background-repeat: no-repeat;background-position: 50% 60%;color: white;">
+                        <b:column style="text-align: center">
+                            <h1 style="font-family: 'Yesteryear', cursive; font-size: 70px">
+                                It's all start with a <p style="color: red">Date</p>
+                            </h1>
+                        </b:column>
+                        <b:column medium-screen="6" style="text-align: center">
                             <b:row>
-                                <b:column medium-screen="8" style="text-align: right">
-                                    <p:outputLabel style="margin-top: 20px">I am a searching for a: </p:outputLabel>
+                                <b:column>
+                                    <b:image value="/img/match.png"></b:image>
                                 </b:column>
-                                <b:column medium-screen="4">
-                                    <b:radiobutton value="#{indexManagedBean.gender}" itemValue="1" itemLabel="Groom"></b:radiobutton>
-                                    <b:radiobutton value="#{indexManagedBean.gender}" itemValue="0" itemLabel="Bride"></b:radiobutton>
+                                <b:column>
+                                    <p:outputLabel style="font-size: 35px">5000</p:outputLabel>
+                                </b:column>
+                                <b:column>
+                                    <p:outputLabel style="font-size: 35px">matches</p:outputLabel>
                                 </b:column>
                             </b:row>
+                        </b:column>
+                        <b:column medium-screen="6" style="text-align: center">
                             <b:row>
-                                <b:column medium-screen="8" style="text-align: right">
-                                    <p:outputLabel style="margin-top: 5px">From age:  </p:outputLabel>
+                                <b:column>
+                                    <b:image value="/img/member.png"></b:image>
                                 </b:column>
-                                <b:column medium-screen="4">
-                                    <b:selectOneMenu>
-                                        <f:selectItem itemLabel="18"></f:selectItem>
-                                        <f:selectItem itemLabel="25"></f:selectItem>
-                                    </b:selectOneMenu>
+                                <b:column>
+                                    <p:outputLabel style="font-size: 35px">5000</p:outputLabel>
+                                </b:column>
+                                <b:column>
+                                    <p:outputLabel style="font-size: 35px">members</p:outputLabel>
                                 </b:column>
                             </b:row>
-                            <b:row>
-                                <b:column medium-screen="8" style="text-align: right">
-                                    <p:outputLabel style="margin-top: 5px">To age:  </p:outputLabel>
-                                </b:column>
-                                <b:column medium-screen="4">
-                                    <b:selectOneMenu>
-                                        <f:selectItem itemLabel="18"></f:selectItem>
-                                        <f:selectItem itemLabel="25"></f:selectItem>
-                                    </b:selectOneMenu>
-                                </b:column>
-                            </b:row>
-                            <b:row>
-                                <b:column medium-screen="8" style="text-align: right">
-                                    <p:outputLabel style="margin-top: 5px">With caste:  </p:outputLabel>
-                                </b:column>
-                                <b:column medium-screen="4">
-                                    <b:selectOneMenu>
-                                        <f:selectItem itemLabel="Caste 1"></f:selectItem>
-                                        <f:selectItem itemLabel="Caste 2"></f:selectItem>
-                                        <f:selectItem itemLabel="Any"></f:selectItem>
-                                    </b:selectOneMenu>
-                                </b:column>
-                            </b:row>
-                            <b:row>
-                                <b:column style="text-align: center">
-                                    <b:commandButton style="margin-bottom: 20px;" value="Let's Find!" look="success"></b:commandButton>
-                                </b:column>
-                            </b:row>
-                        </b:form>
-                    </b:column>
-                </b:row>
-                <b:row style="background: url(/SweetDate-war/img/register.jpg);background-size:cover;background-repeat: no-repeat;background-position: 50% 50%;color: white;text-align: center;margin-top: 30px;margin-bottom: 30px;height: 200px">
-                    <b:column>
-                        <b:form>
-                            <b:commandButton style="margin-top: 25px;height: 150px;width: 300px;font-size: 60px;font-family: 'Yesteryear', cursive" value="JOIN US" look="info"></b:commandButton>
-                        </b:form>
-                    </b:column>
-                </b:row>
-                <b:row style="background: url(/SweetDate-war/img/home_background2.jpg);background-size:cover;background-repeat: no-repeat;background-position: 50% 60%;color: white;">
-                    <b:column style="text-align: center">
-                        <h1 style="font-family: 'Yesteryear', cursive; font-size: 70px">
-                            It's all start with a <p style="color: red">Date</p>
-                        </h1>
-                    </b:column>
-                    <b:column medium-screen="6" style="text-align: center">
-                        <b:row>
-                            <b:column>
-                                <b:image value="/img/match.png"></b:image>
-                            </b:column>
-                            <b:column>
-                                <p:outputLabel style="font-size: 35px">5000</p:outputLabel>
-                            </b:column>
-                            <b:column>
-                                <p:outputLabel style="font-size: 35px">matches</p:outputLabel>
-                            </b:column>
-                        </b:row>
-                    </b:column>
-                    <b:column medium-screen="6" style="text-align: center">
-                        <b:row>
-                            <b:column>
-                                <b:image value="/img/member.png"></b:image>
-                            </b:column>
-                            <b:column>
-                                <p:outputLabel style="font-size: 35px">5000</p:outputLabel>
-                            </b:column>
-                            <b:column>
-                                <p:outputLabel style="font-size: 35px">members</p:outputLabel>
-                            </b:column>
-                        </b:row>
-                    </b:column>
-                </b:row>
+                        </b:column>
+                    </b:row>
+                </ui:fragment>
+            </ui:define>
+            <ui:define name="content">
+                <ui:fragment rendered="#{loginManagedBean.isLogin}">
+                        <p:outputLabel>TEST</p:outputLabel>
+                </ui:fragment>
             </ui:define>
         </ui:composition>
     </h:body>

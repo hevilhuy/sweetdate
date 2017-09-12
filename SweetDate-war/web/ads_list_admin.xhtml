@@ -20,7 +20,7 @@
                         <b:dataTable id="datatable" value="#{adsListManagedBean.adsList}" var="ad"
                                      onselect="ajax:adsListManagedBean.onSelect(indexes)"
                                      ondeselect="ajax:adsListManagedBean.onDeselect(indexes)"
-                                     select="true" selectionMode="multiple">
+                                     select="true" selectionMode="single">
                             <b:dataTableColumn value="#{ad.description}">
                                 <f:facet name="header">
                                     <p:outputLabel>Description</p:outputLabel>

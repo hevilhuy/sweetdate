@@ -2,12 +2,27 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:b="http://bootsfaces.net/ui">
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body rendered="#{!(loginManagedBean.isLogin || loginManagedBean.isAdmin)}">
-        Not logged in.
+        <b:row>
+            <b:column>
+                <p:graphicImage style="width: 180px;max-height: 500px" value="/img/default_avatar.jpg"></p:graphicImage>
+            </b:column>
+        </b:row>
+        <b:row>
+            <b:column>
+                <p:graphicImage style="width: 180px;max-height: 500px" value="/img/default_avatar.jpg"></p:graphicImage>
+            </b:column>
+        </b:row>
+        <b:row>
+            <b:column>
+                <p:graphicImage style="width: 180px;max-height: 500px" value="/img/default_avatar.jpg"></p:graphicImage>
+            </b:column>
+        </b:row>
     </h:body>
     <h:body rendered="#{loginManagedBean.isLogin and !loginManagedBean.isAdmin}">
         Normal user.
@@ -33,6 +48,7 @@
                         <b:navLink header="Question &amp; Answer"></b:navLink>
                         <b:navLink outcome="faces/edit_ads_admin.xhtml?adId=new" icon="plus-sign" icon-align="right" span="12" value="Add"></b:navLink>
                         <b:navLink outcome="faces/ads_list_admin.xhtml" span="12" icon="list" icon-align="right" value="View All"></b:navLink>
+                        <b:navLink outcome="faces/ads_list_admin.xhtml" span="12" icon="list" icon-align="right" value="Status"></b:navLink>
                     </b:pillLinks>
                 </b:panel>
             </b:column>

@@ -7,6 +7,7 @@ package managedBeans;
 
 import beans.AddressCompletor;
 import beans.FollowListFacadeLocal;
+import beans.ProfileFacadeLocal;
 import com.sun.faces.facelets.tag.IterationStatus;
 import entities.FollowList;
 import entities.Profile;
@@ -20,6 +21,7 @@ import java.util.Collections;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -33,31 +35,33 @@ public class FollowManagedBean implements Serializable
 {
 
     @EJB
+    private ProfileFacadeLocal profileFacade;
+
+    @EJB
     private FollowListFacadeLocal followListFacade;
     private Profile profile;
     private ArrayList<FollowList> followingList;
     private ArrayList<FollowList> followerList;
-    
+
     public FollowManagedBean()
     {
     }
-    
-    
+
     public void init()
     {
         profile = (Profile) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentProfile");
-        followingList=new ArrayList<>();
-        followerList=new ArrayList<>();
-        if(profile!=null)
+        followingList = new ArrayList<>();
+        followerList = new ArrayList<>();
+        if (profile != null)
         {
-            ArrayList<FollowList> tempList=new ArrayList<>(followListFacade.findAll());
-            for(FollowList follow:tempList)
+            ArrayList<FollowList> tempList = new ArrayList<>(followListFacade.findAll());
+            for (FollowList follow : tempList)
             {
-                if(follow.getUsername().getUsername().equals(profile.getUsername()))
+                if (follow.getUsername().getUsername().equals(profile.getUsername()))
                 {
                     followerList.add(follow);
                 }
-                if(follow.getFollowerId().getUsername().equals(profile.getUsername()))
+                if (follow.getFollowerId().getUsername().equals(profile.getUsername()))
                 {
                     followingList.add(follow);
                 }
@@ -66,21 +70,31 @@ public class FollowManagedBean implements Serializable
         Collections.reverse(followerList);
         Collections.reverse(followingList);
     }
-    
-    public StreamedContent getAvatar(Profile p)
+
+    public StreamedContent getAvatar()
     {
-        StreamedContent avatarImg=new DefaultStreamedContent();
-        if (p.getAvatar() != null)
+        StreamedContent avatarImg = new DefaultStreamedContent();
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE)
         {
-            ByteArrayInputStream byteArray = new ByteArrayInputStream(p.getAvatar());
-            avatarImg = new DefaultStreamedContent(byteArray, "image/png");
+            return new DefaultStreamedContent();
+        }
+        else
+        {
+            String id = context.getExternalContext().getRequestParameterMap().get("profileId");
+            Profile p = profileFacade.find(id);
+            if (p.getAvatar() != null)
+            {
+                ByteArrayInputStream byteArray = new ByteArrayInputStream(p.getAvatar());
+                avatarImg = new DefaultStreamedContent(byteArray, "image/png");
+            }
         }
         return avatarImg;
     }
-    
+
     public String viewProfile(Profile p)
     {
-        return AddressCompletor.complete("profile.xhtml")+"&username="+p.getUsername();
+        return AddressCompletor.complete("profile.xhtml") + "&username=" + p.getUsername();
     }
 
     public Profile getProfile()

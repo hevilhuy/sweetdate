@@ -30,7 +30,9 @@
                                                 <b:row>
                                                     <b:column>
                                                         <p:graphicImage style="border-radius: 150px" class="col-md-6 col-md-offset-3" rendered="#{follower.followerId.avatar==null?true:fasle}" value="/img/default_avatar.jpg"></p:graphicImage>
-                                                        <p:graphicImage style="border-radius: 150px" class="col-md-6 col-md-offset-3" rendered="#{follower.followerId.avatar==null?fasle:true}" value="#{followManagedBean.getAvatar(follower.followerId)}"></p:graphicImage>
+                                                        <p:graphicImage style="border-radius: 150px" class="col-md-6 col-md-offset-3" rendered="#{follower.followerId.avatar==null?fasle:true}" value="#{followManagedBean.getAvatar()}">
+                                                            <f:param name="profileId" value="#{follower.followerId.username}"></f:param>
+                                                        </p:graphicImage>
                                                     </b:column>
                                                 </b:row>
                                                 <b:row>
@@ -68,7 +70,9 @@
                                                 <b:row>
                                                     <b:column>
                                                         <p:graphicImage style="border-radius: 150px" class="col-md-6 col-md-offset-3" rendered="#{following.username.avatar==null?true:fasle}" value="/img/default_avatar.jpg"></p:graphicImage>
-                                                        <p:graphicImage style="border-radius: 150px" class="col-md-6 col-md-offset-3" rendered="#{following.username.avatar==null?fasle:true}" value="#{followManagedBean.getAvatar(following.username)}"></p:graphicImage>
+                                                        <p:graphicImage style="border-radius: 150px" class="col-md-6 col-md-offset-3" rendered="#{following.username.avatar==null?fasle:true}" value="#{followManagedBean.getAvatar()}">
+                                                            <f:param name="profileId" value="#{following.username.username}"></f:param>
+                                                        </p:graphicImage>
                                                     </b:column>
                                                 </b:row>
                                                 <b:row>

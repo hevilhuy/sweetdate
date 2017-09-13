@@ -12,7 +12,8 @@
     <h:body>
         <ui:composition template="template/master_layout.xhtml">
             <ui:define name="content">
-                <ui:fragment rendered="#{loginManagedBean.isAdmin}">
+<!--                <ui:fragment rendered="#{loginManagedBean.isAdmin}">-->
+                <ui:fragment rendered="true">
                     <f:metadata>
                         <f:viewParam name="adId" value="#{editAdAdminManagedBean.adId}"/>
                         <f:viewAction action="#{editAdAdminManagedBean.init()}"></f:viewAction>
@@ -49,7 +50,7 @@
                                 <p:outputLabel>Due Date:</p:outputLabel>
                             </b:column>
                             <b:column>
-                                <b:dateTimePicker format="YYYY/mm/DD" value="#{editAdAdminManagedBean.dueDate}" showTime="false" showDate="true"></b:dateTimePicker>
+                                <b:dateTimePicker value="#{editAdAdminManagedBean.dueDate}" showTime="false" showDate="true"></b:dateTimePicker>
                             </b:column>
                         </b:row>
                         <b:row>

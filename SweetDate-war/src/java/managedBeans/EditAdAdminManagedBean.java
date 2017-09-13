@@ -107,11 +107,12 @@ public class EditAdAdminManagedBean implements Serializable
             canChange = false;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Failed", "URL is not valid, must begin with http or https"));
         }
+        Calendar tempCalendar=Calendar.getInstance();
+        tempCalendar.setTime(dueDate);
         String year = (dueDate.getYear() + 1900) + "";
-        String month = (dueDate.getMonth()) + "";
+        String month = (dueDate.getMonth()+1) + "";
         String date = dueDate.getDate() + "";
         ad.setDueDate(year + "-" + month + "-" + date);
-        System.out.println("DATE "+ad.getDueDate());
         if (canChange)
         {
             if (adId == null || adId.equals("new") || adId.equals(""))
@@ -154,15 +155,15 @@ public class EditAdAdminManagedBean implements Serializable
                 ad = new Advertisement();
             }
         }
-        DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try
         {
             if (ad.getDueDate() != null)
             {
                 String[] r=ad.getDueDate().split("-");
-                r[1]=(Integer.parseInt(r[1])-1)+"";
-                System.out.println("R1 "+r[1]);
-                dueDate = formatter.parse(ad.getDueDate());
+                r[1]=(Integer.parseInt(r[1]))+"";
+                String trueDate=r[0]+"-"+r[1]+"-"+r[2];
+                dueDate = formatter.parse(trueDate);
             }
         }
         catch (ParseException ex)

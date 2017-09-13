@@ -21,7 +21,7 @@
                         <b:dataTable id="datatable" value="#{profileListAdminManagedBean.profileList}" var="profile"
                                      onselect="ajax:profileListAdminManagedBean.onSelect(indexes)"
                                      ondeselect="ajax:profileListAdminManagedBean.onDeselect(indexes)"
-                                     select="true" selectionMode="multiple">
+                                     select="true" selectionMode="single">
                             <b:dataTableColumn value="#{profile.username}">
                                 <f:facet name="header">
                                     <p:outputLabel>Username</p:outputLabel>

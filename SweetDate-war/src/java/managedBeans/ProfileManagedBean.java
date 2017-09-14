@@ -16,7 +16,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -33,7 +35,6 @@ public class ProfileManagedBean implements Serializable
     private Profile profile;
     private String username;
     private boolean isOwner;
-    private StreamedContent avatarImg;
     private boolean canSeeContact;
     private boolean isSentRequest;
 
@@ -51,11 +52,27 @@ public class ProfileManagedBean implements Serializable
         {
             profile = profileFacade.find(username);
         }
-        if (profile.getAvatar() != null)
+    }
+    
+    public StreamedContent getAvatar()
+    {
+        StreamedContent avatarImg = new DefaultStreamedContent();
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE)
         {
-            ByteArrayInputStream byteArray = new ByteArrayInputStream(profile.getAvatar());
-            avatarImg = new DefaultStreamedContent(byteArray, "image/png");
+            return new DefaultStreamedContent();
         }
+        else
+        {
+            String id = context.getExternalContext().getRequestParameterMap().get("profileId");
+            Profile p = profileFacade.find(id);
+            if (p.getAvatar() != null)
+            {
+                ByteArrayInputStream byteArray = new ByteArrayInputStream(p.getAvatar());
+                avatarImg = new DefaultStreamedContent(byteArray, "image/png");
+            }
+        }
+        return avatarImg;
     }
 
     public Profile getProfile()
@@ -95,16 +112,6 @@ public class ProfileManagedBean implements Serializable
     public void setIsOwner(boolean isOwner)
     {
         this.isOwner = isOwner;
-    }
-
-    public StreamedContent getAvatarImg()
-    {
-        return avatarImg;
-    }
-
-    public void setAvatarImg(StreamedContent avatarImg)
-    {
-        this.avatarImg = avatarImg;
     }
 
     public boolean isCanSeeContact()

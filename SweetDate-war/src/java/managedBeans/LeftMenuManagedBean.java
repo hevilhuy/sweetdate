@@ -60,7 +60,9 @@ public class LeftMenuManagedBean implements Serializable
     @PostConstruct
     public void init()
     {
-        System.out.println("RUNNING");
+        Profile loggedProfile = (Profile) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentProfile");
+        Calendar c = Calendar.getInstance();
+        Date today = c.getTime();
         ArrayList<Advertisement> adsList = new ArrayList<>(advertisementFacade.findAll());
         ArrayList<Advertisement> adsPos1 = new ArrayList<>();
         ArrayList<Advertisement> adsPos2 = new ArrayList<>();
@@ -69,8 +71,6 @@ public class LeftMenuManagedBean implements Serializable
         {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date adDate = new Date();
-            Calendar calendar = Calendar.getInstance();
-            Date today = calendar.getTime();
             if (ad.getDueDate() != null)
             {
                 String[] r = ad.getDueDate().split("-");
@@ -93,19 +93,71 @@ public class LeftMenuManagedBean implements Serializable
 
             if (ad.getDisplay() == Short.parseShort(1 + ""))
             {
-                switch (ad.getPosition())
+                try
                 {
-                    case 1:
-                        adsPos1.add(ad);
-                        break;
-                    case 2:
-                        adsPos2.add(ad);
-                        break;
-                    case 3:
-                        adsPos3.add(ad);
-                        break;
-                    default:
-                        break;
+                    switch (ad.getPosition())
+                    {
+                        case 1:
+                            if (loggedProfile!=null)
+                            {
+                                String[] r = loggedProfile.getBirthdate().split("-");
+                                int currentYear = c.get(Calendar.YEAR);
+                                int age = currentYear - Integer.parseInt(r[0]);
+                                System.out.println("CURRENT YEAR "+currentYear);
+                                System.out.println("AGE "+age);
+                                if (age >= ad.getMinAge() && age <= ad.getMaxAge())
+                                {
+                                    adsPos1.add(ad);
+                                }
+                            }
+                            else
+                            {
+                                adsPos1.add(ad);
+                            }
+                            break;
+                        case 2:
+                            if (loggedProfile!=null)
+                            {
+                                String[] r = loggedProfile.getBirthdate().split("-");
+                                int currentYear = c.get(Calendar.YEAR);
+                                int age = currentYear - Integer.parseInt(r[0]);
+                                System.out.println("CURRENT YEAR "+currentYear);
+                                System.out.println("AGE "+age);
+                                if (age >= ad.getMinAge() && age <= ad.getMaxAge())
+                                {
+                                    adsPos2.add(ad);
+                                }
+                            }
+                            else
+                            {
+                                adsPos2.add(ad);
+                            }
+                            break;
+                        case 3:
+                            if (loggedProfile!=null)
+                            {
+                                String[] r = loggedProfile.getBirthdate().split("-");
+                                int currentYear = c.get(Calendar.YEAR);
+                                int age = currentYear - Integer.parseInt(r[0]);
+                                System.out.println("CURRENT YEAR "+currentYear);
+                                System.out.println("AGE "+age);
+                                if (age >= ad.getMinAge() && age <= ad.getMaxAge())
+                                {
+                                    adsPos3.add(ad);
+                                }
+                            }
+                            else
+                            {
+                                adsPos3.add(ad);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+
                 }
             }
         }

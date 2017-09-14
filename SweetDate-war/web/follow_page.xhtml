@@ -29,8 +29,8 @@
                                             <b:thumbnail>
                                                 <b:row>
                                                     <b:column>
-                                                        <p:graphicImage style="border-radius: 150px" class="col-md-6 col-md-offset-3" rendered="#{follower.followerId.avatar==null?true:fasle}" value="/img/default_avatar.jpg"></p:graphicImage>
-                                                        <p:graphicImage style="border-radius: 150px" class="col-md-6 col-md-offset-3" rendered="#{follower.followerId.avatar==null?fasle:true}" value="#{followManagedBean.getAvatar()}">
+                                                        <p:graphicImage height="150px" width="150px" style="border-radius: 150px" class="col-md-6 col-md-offset-3" rendered="#{follower.followerId.avatar==null?true:fasle}" value="/img/default_avatar.jpg"></p:graphicImage>
+                                                        <p:graphicImage height="150px" width="150px" style="border-radius: 150px" class="col-md-6 col-md-offset-3" rendered="#{follower.followerId.avatar==null?fasle:true}" value="#{followManagedBean.getAvatar()}">
                                                             <f:param name="profileId" value="#{follower.followerId.username}"></f:param>
                                                         </p:graphicImage>
                                                     </b:column>
@@ -45,7 +45,7 @@
                                                 </b:row>
                                                 <b:row>
                                                     <b:column style="text-align: justify">
-                                                        <p:outputLabel style="font-weight: normal">#{follower.followerId.about}</p:outputLabel>
+                                                        <p:outputLabel style="font-weight: normal">#{helperManagedBean.getAbout(follower.followerId.about)}</p:outputLabel>
                                                     </b:column>
                                                 </b:row>
                                                 <b:row>
@@ -85,7 +85,7 @@
                                                 </b:row>
                                                 <b:row>
                                                     <b:column style="text-align: justify">
-                                                        <p:outputLabel style="font-weight: normal">#{following.username.about}</p:outputLabel>
+                                                        <p:outputLabel style="font-weight: normal">#{helperManagedBean.getAbout(following.username.about)}</p:outputLabel>
                                                     </b:column>
                                                 </b:row>
                                                 <b:row>

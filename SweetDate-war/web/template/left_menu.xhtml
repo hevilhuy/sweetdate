@@ -35,7 +35,30 @@
         </b:row>
     </h:body>
     <h:body rendered="#{loginManagedBean.isLogin and !loginManagedBean.isAdmin}">
-        Normal user.
+                <f:metadata>
+            <f:viewAction action="#{leftMenuManagedBean.init()}"></f:viewAction>
+        </f:metadata>
+        <b:row>
+            <b:column>
+                <h:outputLink value="#{leftMenuManagedBean.ad1.link}">
+                    <p:graphicImage style="width: 180px;max-height: 500px;margin-bottom: 10px" value="#{leftMenuManagedBean.ad1Image}"></p:graphicImage>
+                </h:outputLink>
+            </b:column>
+        </b:row>
+        <b:row>
+            <b:column>
+                <h:outputLink value="#{leftMenuManagedBean.ad2.link}">
+                    <p:graphicImage style="width: 180px;max-height: 500px;margin-bottom: 10px" value="#{leftMenuManagedBean.ad2Image}"></p:graphicImage>
+                </h:outputLink>
+            </b:column>
+        </b:row>
+        <b:row>
+            <b:column>
+                <h:outputLink value="#{leftMenuManagedBean.ad3.link}">
+                    <p:graphicImage style="width: 180px;max-height: 500px;" value="#{leftMenuManagedBean.ad3Image}"></p:graphicImage>
+                </h:outputLink>
+            </b:column>
+        </b:row>
     </h:body>
     <h:body rendered="#{loginManagedBean.isAdmin}">
         <b:row>

@@ -19,11 +19,18 @@
                 <h1 style="font-family: 'Yesteryear', cursive">#{profileManagedBean.profile.displayName}</h1>
                 <hr style="margin: 0px"/>
                 <p:outputLabel style="font-weight: lighter;">#{profileManagedBean.profile.country}</p:outputLabel>
+                <b:row rendered="#{profileManagedBean.isOwner and profileManagedBean.profile.active eq 0}">
+                    <b:column>
+                        <p:outputLabel style="color: red;font-weight: bold">Your profile is not activated. Please provide us your information, after that, send us an email, we will verify your profile.</p:outputLabel>
+                    </b:column>
+                </b:row>
                 <b:row>
                     <b:column medium-screen="4">
                         <p:graphicImage style="border-radius: 150px" class="col-md-12" rendered="#{profileManagedBean.profile.avatar==null?true:fasle}" value="/img/default_avatar.jpg"></p:graphicImage>
-                        <p:graphicImage style="border-radius: 150px" class="col-md-12" rendered="#{profileManagedBean.profile.avatar==null?fasle:true}" value="#{profileManagedBean.avatarImg}"></p:graphicImage>
-                        <b:row id="followStatus" rendered="#{!profileManagedBean.isOwner}">
+                        <p:graphicImage style="border-radius: 150px" class="col-md-12" rendered="#{profileManagedBean.profile.avatar==null?fasle:true}" value="#{profileManagedBean.getAvatar()}">
+                            <f:param name="profileId" value="#{profileManagedBean.profile.username}"></f:param>
+                        </p:graphicImage>
+                        <b:row id="followStatus" rendered="#{!profileManagedBean.isOwner and loginManagedBean.isLogin}">
                             <b:form>
                                 <ui:fragment rendered="#{profileManagedBean.isSentRequest}">
                                     <b:column style="text-align: center;margin-top: 15px">

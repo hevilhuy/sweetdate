@@ -6,7 +6,8 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:pass="http://java.sun.com/jsf/passthrough"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -122,7 +123,41 @@
                 </ui:fragment>
             </ui:define>
             <ui:define name="content">
-                <ui:fragment rendered="#{loginManagedBean.isLogin}">
+                <ui:fragment rendered="#{loginManagedBean.isLogin and !loginManagedBean.isAdmin}">
+                    <b:form>
+                        <b:thumbnail>
+                            <b:row>
+                                <b:column>
+                                    <p:graphicImage style="border-radius: 150px" class="col-md-6 col-md-offset-3" rendered="#{indexManagedBean.viewingProfile.avatar==null?true:fasle}" value="/img/default_avatar.jpg"></p:graphicImage>
+                                    <p:graphicImage style="border-radius: 150px" class="col-md-6 col-md-offset-3" rendered="#{indexManagedBean.viewingProfile.avatar==null?fasle:true}" value="#{indexManagedBean.getAvatar()}">
+                                        <f:param name="profileId" value="#{indexManagedBean.viewingProfile.username}"></f:param>
+                                    </p:graphicImage>
+                                </b:column>
+                            </b:row>
+                            <b:row>
+                                <b:column style="text-align: center;font-family: 'Yesteryear', cursive;font-size: 20px;font-weight: bold">#{indexManagedBean.viewingProfile.displayName}</b:column>
+                            </b:row>
+                            <b:row>
+                                <b:column style="text-align: center">
+                                    <p:outputLabel style="font-weight: lighter;font-size: 12px;font-style: italic;color: #ccc">#{indexManagedBean.viewingProfile.country}</p:outputLabel>
+                                </b:column>
+                            </b:row>
+                            <b:row>
+                                <b:column style="text-align: justify">
+                                    <p:outputLabel style="font-weight: normal">#{indexManagedBean.viewingProfile.about}</p:outputLabel>
+                                </b:column>
+                            </b:row>
+                            <b:row>
+                                <b:column style="text-align: center">
+                                    <b:commandButton action="#{indexManagedBean.viewProfile(indexManagedBean.viewingProfile)}" value="View Profile" look="info"></b:commandButton>
+                                </b:column>
+                            </b:row>
+                        </b:thumbnail>
+                        <b:commandButton disabled="#{indexManagedBean.getDisablePrevious()}" update="@form" actionListener="#{indexManagedBean.previousProfile()}" look="info" style="float:left" value="Previous Profile"></b:commandButton>
+                        <b:commandButton disabled="#{indexManagedBean.getDisableNext()}" update="@form" actionListener="#{indexManagedBean.nextProfile()}" look="info" style="float: right" value="Next Profile"></b:commandButton>
+                    </b:form>
+                </ui:fragment>
+                <ui:fragment rendered="#{loginManagedBean.isAdmin}">
                     <p:outputLabel style="height: 100%;width: 100%;text-align: center">Welcome to MyDate Administrator</p:outputLabel>
                 </ui:fragment>
             </ui:define>

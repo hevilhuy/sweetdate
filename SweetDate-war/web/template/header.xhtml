@@ -32,7 +32,7 @@
                 <b:navLink value="Sign Up" rendered="#{!loginManagedBean.isLogin}" outcome="faces/register.xhtml"></b:navLink>
                 <b:dropMenu value="#{loginManagedBean.profile.displayName}" rendered="#{loginManagedBean.isLogin}">
                     <b:navLink icon="eye-open" value="Profile" rendered="#{loginManagedBean.isLogin}" outcome="faces/profile.xhtml?faces-redirect=true&amp;username=#{loginManagedBean.profile.username}"></b:navLink>
-                    <b:navLink icon="info-sign" value="Change Informations" rendered="#{loginManagedBean.isLogin}" outcome="faces/edit_profile.xhtml?faces-redirect=true"></b:navLink>
+                    <b:navLink icon="info-sign" value="Change Information" rendered="#{loginManagedBean.isLogin}" outcome="faces/edit_profile.xhtml?faces-redirect=true"></b:navLink>
                     <b:navLink icon="user" value="Follow &amp; Followers" rendered="#{loginManagedBean.isLogin}" outcome="faces/follow_page.xhtml?faces-redirect=true"></b:navLink>
                     <b:form>
                         <b:commandButton medium-screen="12"  look="info" value="Logout" rendered="#{loginManagedBean.isLogin}" action="#{loginManagedBean.logout()}" style="margin-top:10px"></b:commandButton>

@@ -45,19 +45,37 @@ public class IndexManagedBean implements Serializable
     @PostConstruct
     public void init()
     {
-        ArrayList<Profile> tempList = new ArrayList<>(profileFacade.findAll());
         profileList = new ArrayList<>();
+    }
+
+    public void init2()
+    {
+        ArrayList<Profile> tempList = new ArrayList<>(profileFacade.findAll());
+        ArrayList<Profile> temp2 = new ArrayList<>();
         Profile loggedProfile = (Profile) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentProfile");
-        for (Profile p : tempList)
+        if (loggedProfile != null)
         {
-            if (p.getActive() == Integer.parseInt("1")&&p.getRoleId().getRoleId()!=1)
+            if (loggedProfile.getActive() == 1)
             {
-                profileList.add(p);
+                for (Profile p : tempList)
+                {
+                    if (p.getActive() == Integer.parseInt("1") && p.getRoleId().getRoleId() != 1)
+                    {
+                        temp2.add(p);
+                    }
+                }
+                for (Profile p : temp2)
+                {
+                    if (!loggedProfile.getGender().equals(p.getGender()) && !p.getUsername().equals(loggedProfile.getUsername()))
+                    {
+                        profileList.add(p);
+                    }
+                }
+                Collections.shuffle(profileList);
+                currentPosition = 0;
+                viewingProfile = profileList.get(currentPosition);
             }
         }
-        Collections.shuffle(profileList);
-        currentPosition = 0;
-        viewingProfile = profileList.get(currentPosition);
     }
 
     public void nextProfile()

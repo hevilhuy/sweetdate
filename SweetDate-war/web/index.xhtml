@@ -99,7 +99,7 @@
                                     <b:image value="/img/match.png"></b:image>
                                 </b:column>
                                 <b:column>
-                                    <p:outputLabel style="font-size: 35px">5000</p:outputLabel>
+                                    <p:outputLabel style="font-size: 35px">More than 5000</p:outputLabel>
                                 </b:column>
                                 <b:column>
                                     <p:outputLabel style="font-size: 35px">matches</p:outputLabel>
@@ -112,7 +112,7 @@
                                     <b:image value="/img/member.png"></b:image>
                                 </b:column>
                                 <b:column>
-                                    <p:outputLabel style="font-size: 35px">5000</p:outputLabel>
+                                    <p:outputLabel style="font-size: 35px">More than 5000</p:outputLabel>
                                 </b:column>
                                 <b:column>
                                     <p:outputLabel style="font-size: 35px">members</p:outputLabel>
@@ -124,7 +124,10 @@
             </ui:define>
             <ui:define name="content">
                 <ui:fragment rendered="#{loginManagedBean.isLogin and !loginManagedBean.isAdmin}">
-                    <b:form>
+                    <f:metadata>
+                        <f:viewAction action="#{indexManagedBean.init2()}"></f:viewAction>
+                    </f:metadata>
+                    <b:form rendered="#{loginManagedBean.isActive}">
                         <b:thumbnail>
                             <b:row>
                                 <b:column>
@@ -156,6 +159,9 @@
                         <b:commandButton disabled="#{indexManagedBean.getDisablePrevious()}" update="@form" actionListener="#{indexManagedBean.previousProfile()}" look="info" style="float:left" value="Previous Profile"></b:commandButton>
                         <b:commandButton disabled="#{indexManagedBean.getDisableNext()}" update="@form" actionListener="#{indexManagedBean.nextProfile()}" look="info" style="float: right" value="Next Profile"></b:commandButton>
                     </b:form>
+                    <b:row rendered="#{!loginManagedBean.isActive}">
+                        <p:outputLabel style="color: red;font-weight: bold;margin-left: 10px">Your profile is not activated. Please provide us your information (click on your display name, chose "Change Information"), after that, send us an email, we will verify your profile.</p:outputLabel>
+                    </b:row>
                 </ui:fragment>
                 <ui:fragment rendered="#{loginManagedBean.isAdmin}">
                     <p:outputLabel style="height: 100%;width: 100%;text-align: center">Welcome to MyDate Administrator</p:outputLabel>

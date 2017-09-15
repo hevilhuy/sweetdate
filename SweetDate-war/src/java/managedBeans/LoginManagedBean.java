@@ -30,6 +30,7 @@ public class LoginManagedBean implements Serializable
     private boolean isLogin;
     private boolean isAdmin;
     private String errors;
+    private boolean isActive;
 
     public LoginManagedBean()
     {
@@ -60,6 +61,7 @@ public class LoginManagedBean implements Serializable
                 isLogin = true;
                 profile = profileInDb;
                 isAdmin = profile.getRoleId().getRoleId() == 1;
+                isActive = profile.getActive() == 1;
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentProfile", profile);
                 return AddressCompletor.complete("index");
             }
@@ -107,8 +109,19 @@ public class LoginManagedBean implements Serializable
         profile = new Profile();
         isLogin = false;
         isAdmin = false;
+        isActive = false;
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("currentProfile");
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return AddressCompletor.complete("index");
+    }
+
+    public boolean isIsActive()
+    {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive)
+    {
+        this.isActive = isActive;
     }
 }

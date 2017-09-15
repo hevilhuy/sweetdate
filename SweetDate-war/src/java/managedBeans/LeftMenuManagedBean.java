@@ -98,13 +98,11 @@ public class LeftMenuManagedBean implements Serializable
                     switch (ad.getPosition())
                     {
                         case 1:
-                            if (loggedProfile!=null)
+                            if (loggedProfile!=null&&loggedProfile.getActive()==1)
                             {
                                 String[] r = loggedProfile.getBirthdate().split("-");
                                 int currentYear = c.get(Calendar.YEAR);
                                 int age = currentYear - Integer.parseInt(r[0]);
-                                System.out.println("CURRENT YEAR "+currentYear);
-                                System.out.println("AGE "+age);
                                 if (age >= ad.getMinAge() && age <= ad.getMaxAge())
                                 {
                                     adsPos1.add(ad);
@@ -116,13 +114,11 @@ public class LeftMenuManagedBean implements Serializable
                             }
                             break;
                         case 2:
-                            if (loggedProfile!=null)
+                            if (loggedProfile!=null&&loggedProfile.getActive()==1)
                             {
                                 String[] r = loggedProfile.getBirthdate().split("-");
                                 int currentYear = c.get(Calendar.YEAR);
                                 int age = currentYear - Integer.parseInt(r[0]);
-                                System.out.println("CURRENT YEAR "+currentYear);
-                                System.out.println("AGE "+age);
                                 if (age >= ad.getMinAge() && age <= ad.getMaxAge())
                                 {
                                     adsPos2.add(ad);
@@ -134,13 +130,11 @@ public class LeftMenuManagedBean implements Serializable
                             }
                             break;
                         case 3:
-                            if (loggedProfile!=null)
+                            if (loggedProfile!=null&&loggedProfile.getActive()==1)
                             {
                                 String[] r = loggedProfile.getBirthdate().split("-");
                                 int currentYear = c.get(Calendar.YEAR);
                                 int age = currentYear - Integer.parseInt(r[0]);
-                                System.out.println("CURRENT YEAR "+currentYear);
-                                System.out.println("AGE "+age);
                                 if (age >= ad.getMinAge() && age <= ad.getMaxAge())
                                 {
                                     adsPos3.add(ad);

@@ -45,11 +45,12 @@ public class IndexManagedBean implements Serializable
     @PostConstruct
     public void init()
     {
-        profileList = new ArrayList<>();
+        
     }
 
     public void init2()
     {
+        profileList = new ArrayList<>();
         ArrayList<Profile> tempList = new ArrayList<>(profileFacade.findAll());
         ArrayList<Profile> temp2 = new ArrayList<>();
         Profile loggedProfile = (Profile) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentProfile");
